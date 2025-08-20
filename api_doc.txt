@@ -1,0 +1,74 @@
+Absolument. C'est une excellente idée de tout récapituler pour avoir une "source de vérité" unique et claire.
+
+Voici l'inventaire complet de **toutes les routes** que le site web client doit appeler, avec leur rôle, leur méthode HTTP, et surtout, la **bonne URL formatée** pour éviter toute erreur de `404 Not Found` ou de redirection.
+
+---
+
+## **Inventaire Complet des Routes de l'API pour le Site Web Client**
+
+### **URL de Base : `https://benin-luxe-cajou-api.onrender.com`**
+
+---
+
+### **Section 1 : 🌐 Navigation & Consultation Publique**
+*(Ces routes sont accessibles sans authentification)*
+
+| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
+| :--- | :--- | :--- | :--- |
+| **Charger la structure du site** | `GET` | `/api/catalogue-structure` | **Appel principal.** Récupère les catégories et leurs types de produits en une seule fois pour construire la navigation. |
+| **Afficher les produits** | `GET` | `/api/products` | Récupère la liste des produits. Peut être filtrée avec `?type_id=2`. |
+| **Voir un produit** | `GET` | `/api/products/{id}` | Récupère les détails d'un produit spécifique. |
+| **Voir les zones de livraison** | `GET` | `/api/delivery-zones` | Récupère la liste des zones et tarifs pour la page de checkout. |
+
+---
+
+### **Section 2 : 👤 Authentification Client**
+*(Ces routes n'ont pas le préfixe `/api`)*
+
+| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
+| :--- | :--- | :--- | :--- |
+| **Inscription (étape 1)** | `POST` | `/auth/register` | Envoie les infos du formulaire pour créer un compte inactif. |
+| **Vérification (étape 2)** | `POST` | `/auth/verify-account` | Envoie le code reçu par email pour activer le compte et obtenir les tokens. |
+| **Connexion** | `POST` | `/auth/login` | Connecte un utilisateur existant et renvoie les tokens. |
+| **Récupérer un nouveau token** | `POST` | `/auth/refresh` | Envoie le `refresh_token` pour obtenir un nouvel `access_token`. |
+| **Mot de passe oublié** | `POST` | `/auth/forgot-password` | Demande l'envoi d'un code de réinitialisation. |
+| **Réinitialiser le mot de passe**| `POST` | `/auth/reset-password` | Envoie le code et le nouveau mot de passe. |
+
+---
+
+### **Section 3 : 🛒 Gestion du Panier d'Achat**
+*(Route unique qui gère tout, avec un slash final très important)*
+
+| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
+| :--- | :--- | :--- | :--- |
+| **Récupérer / Modifier le panier** | `POST` | `/api/cart/` | **Route unifiée.** Gère la récupération, l'ajout, la modification et la suppression d'articles. |
+
+---
+
+### **Section 4 : 🧑‍💼 Profil de l'Utilisateur**
+*(Toutes ces routes nécessitent une authentification)*
+
+| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
+| :--- | :--- | :--- | :--- |
+| **Voir son profil** | `GET` | `/api/profile/` | Récupère les informations de base de l'utilisateur. |
+| **Modifier son profil** | `PUT` | `/api/profile/` | Met à jour le nom, prénom ou téléphone. |
+| **Changer son mot de passe** | `PUT` | `/api/profile/password` | Modifie le mot de passe après vérification de l'ancien. |
+| **Voir son historique** | `GET` | `/api/profile/orders` | Récupère la liste (résumé) de toutes ses commandes. |
+| **Voir le détail d'une commande**| `GET` | `/api/profile/orders/{id}` | Récupère les détails complets d'une commande (produits, suivi). |
+| **Lister ses adresses** | `GET` | `/api/profile/addresses` | Récupère toutes les adresses de livraison enregistrées. |
+| **Ajouter une adresse** | `POST` | `/api/profile/addresses` | Enregistre une nouvelle adresse. |
+| **Modifier une adresse** | `PUT` | `/api/profile/addresses/{id}`| Met à jour une adresse existante. |
+| **Supprimer une adresse** | `DELETE`| `/api/profile/addresses/{id}`| Supprime une adresse. |
+| **Définir par défaut** | `POST` | `/api/profile/addresses/{id}/set-default`| Marque une adresse comme étant celle par défaut. |
+
+---
+
+### **Section 5 : 💳 Processus de Paiement**
+*(Nécessite une authentification)*
+
+| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
+| :--- | :--- | :--- | :--- |
+| **Lancer le paiement** | `POST` | `/api/payment/initialize` | Envoie les infos de livraison pour créer la commande et obtenir l'URL FedaPay. |
+| **Vérifier le statut après paiement**| `GET` | `/api/payment/status/{order_id}`| Confirme le paiement après la redirection depuis FedaPay. |
+
+Cette liste est la référence définitive pour le développement du frontend. En respectant scrupuleusement ces routes, la communication avec l'API sera fluide et sans erreur.
