@@ -121,7 +121,7 @@ function Header() {
                             <DropdownMenuContent className="mr-4">
                                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <Link href="/profile"><DropdownMenuItem>Profile</DropdownMenuItem></Link>
+                                <DropdownMenuItem onClick={() => router.push('/profile')}>Profile</DropdownMenuItem>
                                 <DropdownMenuItem onClick={OnSignOut} className="text-red-500">Sign Out</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
