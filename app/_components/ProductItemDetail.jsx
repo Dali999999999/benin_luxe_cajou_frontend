@@ -63,7 +63,7 @@ function ProductItemDetail({ product }) {
                 <h2 className='text-2xl font-bold'>{product.nom}</h2>
                 <h2 className='text-sm text-gray-500'>{product.description}</h2>
                 <div className='flex gap-3'>
-                    <h2 className='font-bold text-3xl'>${product.prix_unitaire}</h2>
+                    <h2 className='font-bold text-3xl'>{product.prix_unitaire} FCFA</h2>
                 </div>
                 <h2 className='font-medium text-lg'>Quantité <span className='text-sm text-gray-500'>(En stock : {product.stock_disponible})</span></h2>
                 <div className='flex flex-col items-baseline gap-3'>
@@ -73,7 +73,7 @@ function ProductItemDetail({ product }) {
                             <h2>{quantity}</h2>
                             <button disabled={quantity >= product.stock_disponible} onClick={() => setQuantity(quantity + 1)}>+</button>
                         </div>
-                        <h2 className='text-2xl font-bold'> = ${(quantity * product.prix_unitaire).toFixed(2)}</h2>
+                        <h2 className='text-2xl font-bold'> = {(quantity * product.prix_unitaire).toFixed(2)} FCFA</h2>
                     </div>
                     <Button disabled={loading || product.stock_disponible === 0} className="flex gap-3" onClick={() => addToCart()}>
                         <ShoppingBasket />

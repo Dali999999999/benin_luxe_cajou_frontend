@@ -25,7 +25,6 @@ function Footer() {
     <footer className="relative text-white mt-16 border-t-4 border-primary overflow-hidden">
       {/* On remplace bg-black par bg-primary */}
       <div className="absolute inset-0 bg-primary"></div>
-      <div className="absolute inset-0 bg-[url('/cajou-pattern.png')] bg-repeat opacity-10"></div>
 
       {/* Contenu du footer */}
       <div className="relative z-10 container mx-auto px-4 py-12">
@@ -81,7 +80,7 @@ function Footer() {
           </div>
 
           <div className="flex flex-col items-start">
-            <Image src="/logo.png" width={150} height={100} alt="logo" />
+            <Image src="/logo.png" width={150} height={100} alt="logo" className="h-auto" />
             <h5>Bénin Luxe Cajou</h5>
             <p className="mt-4 text-white/70 text-sm">Des noix de cajou de qualité premium, de nos plantations à votre table.</p>
           </div>

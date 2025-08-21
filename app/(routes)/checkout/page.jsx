@@ -106,6 +106,28 @@ function Checkout() {
     };
 
     const handlePlaceOrder = () => {
+        // --- VALIDATION AVANT ENVOI ---
+        if (!formData.nom_destinataire || !formData.telephone_destinataire) {
+            toast.error("Veuillez renseigner le nom et le téléphone du destinataire.");
+            return;
+        }
+        if (!formData.zone_livraison_id) {
+            toast.error("Veuillez sélectionner une zone de livraison.");
+            return;
+        }
+        if (formData.type_adresse === 'manuelle' && (!formData.ville || !formData.quartier)) {
+            toast.error("Pour une adresse manuelle, veuillez renseigner la ville et le quartier.");
+            return;
+        }
+        if ((formData.type_adresse === 'gps_actuelle' || formData.type_adresse === 'gps_choisie') && (!formData.latitude || !formData.longitude)) {
+            toast.error("Veuillez fournir ou sélectionner une localisation GPS valide.");
+            return;
+        }
+        if (!cart || cart.length === 0) {
+            toast.error("Votre panier est vide.");
+            return;
+        }
+
         setIsPlacingOrder(true);
         GlobalApi.initializePayment(formData).then(resp => {
             toast.success("Paiement initié !");
@@ -137,7 +159,7 @@ function Checkout() {
                     <select name="zone_livraison_id" onChange={(e) => handleZoneChange(e.target.value)} className="w-full p-2 border rounded-md bg-white" defaultValue="">
                         <option value="" disabled>Sélectionner une zone de livraison</option>
                         {deliveryZones.map(zone => (
-                            <option key={zone.id} value={zone.id}>{zone.nom_zone} (+${zone.tarif_livraison})</option>
+                            <option key={zone.id} value={zone.id}>{zone.nom_zone} (+{zone.tarif_livraison} FCFA)</option>
                         ))}
                     </select>
                     
@@ -179,14 +201,14 @@ function Checkout() {
                     {cart && cart.map(item => (
                         <div key={item.id} className="flex justify-between text-sm">
                             <span>{item.produit.nom} x {item.quantite}</span>
-                            <span>${(item.quantite * item.produit.prix_unitaire).toFixed(2)}</span>
+                            <span>{(item.quantite * item.produit.prix_unitaire).toFixed(2)} FCFA</span>
                         </div>
                     ))}
                 </div>
                 <div className="space-y-2">
-                    <div className="flex justify-between"><span>Sous-total</span><span>${subtotal.toFixed(2)}</span></div>
-                    <div className="flex justify-between"><span>Livraison</span><span>${(total - subtotal).toFixed(2)}</span></div>
-                    <div className="flex justify-between font-bold text-lg border-t pt-2 mt-2"><span>Total</span><span>${total.toFixed(2)}</span></div>
+                    <div className="flex justify-between"><span>Sous-total</span><span>{subtotal.toFixed(2)} FCFA</span></div>
+                    <div className="flex justify-between"><span>Livraison</span><span>{(total - subtotal).toFixed(2)} FCFA</span></div>
+                    <div className="flex justify-between font-bold text-lg border-t pt-2 mt-2"><span>Total</span><span>{total.toFixed(2)} FCFA</span></div>
                 </div>
                 <Button className="w-full mt-6" onClick={handlePlaceOrder} disabled={isPlacingOrder}>
                     {isPlacingOrder ? <LoaderIcon className='animate-spin' /> : "Passer la commande"}

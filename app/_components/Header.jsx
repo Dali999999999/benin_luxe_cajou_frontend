@@ -53,7 +53,7 @@ function Header() {
                 {/* Logo + Nom */}
                 <div className="flex items-center gap-3">
                     <Link href="/">
-                        <Image src="/logo.png" alt="Bénin Luxe Cajou" width={100} height={80} className="cursor-pointer" />
+                        <Image src="/logo.png" alt="Bénin Luxe Cajou" width={100} height={80} className="cursor-pointer h-auto" />
                     </Link>
                     <Link href="/">
                     <span className="text-2xl font-bold text-primary">Bénin Luxe Cajou</span>
@@ -75,7 +75,7 @@ function Header() {
                             <DropdownMenuItem onClick={() => handleCategoryClick(null)}>All</DropdownMenuItem>
                             {catalogueStructure.map((cat, idx) => (
                                 <DropdownMenuItem key={idx} onClick={() => handleCategoryClick(cat)} className="flex items-center gap-3">
-                                    <Image src={cat.image_url} alt={cat.nom} width={25} height={25} unoptimized />
+                                    <Image src={cat.image_url || '/logo.png'} alt={cat.nom} width={25} height={25} unoptimized />
                                     <span>{cat.nom}</span>
                                 </DropdownMenuItem>
                             ))}
@@ -128,13 +128,31 @@ function Header() {
                     )}
                 </div>
 
-                {/* Mobile burger */}
-                <button
-                    className="lg:hidden p-2 rounded-md hover:bg-slate-100 transition-colors"
-                    onClick={() => setMobileMenuOpen(true)}
-                >
-                    <Menu className="w-6 h-6 text-slate-600" />
-                </button>
+                {/* --- MODIFICATION START --- */}
+                {/* Mobile Icons (Cart + Burger) */}
+                <div className="flex items-center gap-2 lg:hidden">
+                     {/* Cart */}
+                     <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <button className="relative p-2 rounded-full hover:bg-slate-100 transition-colors">
+                                <ShoppingBag className="w-6 h-6 text-slate-600" />
+                                <span className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white text-xs">{cart?.length}</span>
+                            </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-80 mr-4">
+                            <Cart cart={cart} onUpdateCart={getCartData} />
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+
+                    {/* Mobile burger */}
+                    <button
+                        className="p-2 rounded-md hover:bg-slate-100 transition-colors"
+                        onClick={() => setMobileMenuOpen(true)}
+                    >
+                        <Menu className="w-6 h-6 text-slate-600" />
+                    </button>
+                </div>
+                {/* --- MODIFICATION END --- */}
             </div>
 
             {/* Mobile Slide-in Menu */}
@@ -160,7 +178,7 @@ function Header() {
                             <DropdownMenuItem onClick={() => handleCategoryClick(null)}>All</DropdownMenuItem>
                             {catalogueStructure.map((cat, idx) => (
                                 <DropdownMenuItem key={idx} onClick={() => handleCategoryClick(cat)} className="flex items-center gap-3">
-                                    <Image src={cat.image_url} alt={cat.nom} width={25} height={25} unoptimized />
+                                    <Image src={cat.image_url || '/logo.png'} alt={cat.nom} width={25} height={25} unoptimized />
                                     <span>{cat.nom}</span>
                                 </DropdownMenuItem>
                             ))}
@@ -176,7 +194,7 @@ function Header() {
                         <Home className="w-5 h-5" /> Home
                     </Link>
 
-                    {/* Cart */}
+                    {/* Cart in mobile menu - can be kept or removed depending on preference */}
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <button className="relative p-2 rounded-md bg-slate-100 hover:bg-slate-200 transition-colors w-full text-left flex items-center gap-2">

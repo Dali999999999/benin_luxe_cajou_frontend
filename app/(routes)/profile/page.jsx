@@ -25,7 +25,7 @@ function Profile() {
     const router = useRouter();
 
     useEffect(() => {
-        const jwt = localStorage.getItem('jwt');
+        const jwt = localStorage.getItem('access_token');
         if (!jwt) {
             router.push('/sign-in');
             return;
@@ -46,7 +46,7 @@ function Profile() {
     }, [router]);
 
     useEffect(() => {
-        const jwt = localStorage.getItem('jwt');
+        const jwt = localStorage.getItem('access_token');
         if (jwt) {
             GlobalApi.getOrders().then(resp => {
                 setOrders(resp);
@@ -197,7 +197,7 @@ function Profile() {
                                         <p className="text-sm text-gray-600">Date: {new Date(order.date_commande).toLocaleDateString()}</p>
                                     </div>
                                     <div className="text-right">
-                                        <p className="font-semibold">Total: ${order.total}</p>
+                                        <p className="font-semibold">Total: {order.total} FCFA</p>
                                         <span className={`text-sm font-medium px-2.5 py-0.5 rounded-full ${
                                             order.statut === 'livree' ? 'bg-green-100 text-green-800' :
                                             order.statut === 'en_preparation' ? 'bg-yellow-100 text-yellow-800' :
@@ -238,7 +238,7 @@ function Profile() {
                                                     <div className="space-y-3">
                                                         {selectedOrderDetails.details.map((item, idx) => (
                                                             <div key={idx} className="flex items-center gap-4">
-                                                                <Image src={item.produit.images[0]?.url_image || '/logo.png'}
+                                                                <Image src={item?.produit?.images?.[0]?.url_image || '/logo.png'}
                                                                     alt={item.produit.nom}
                                                                     width={60}
                                                                     height={60}
@@ -246,8 +246,8 @@ function Profile() {
                                                                 />
                                                                 <div>
                                                                     <p className="font-medium">{item.produit.nom}</p>
-                                                                    <p className="text-sm text-gray-600">Qty: {item.quantite} x ${item.prix_unitaire}</p>
-                                                                    <p className="font-semibold">Subtotal: ${item.sous_total}</p>
+                                                                    <p className="text-sm text-gray-600">Qty: {item.quantite} x {item.prix_unitaire} FCFA</p>
+                                                                    <p className="font-semibold">Subtotal: {item.sous_total} FCFA</p>
                                                                 </div>
                                                             </div>
                                                         ))}
@@ -267,19 +267,19 @@ function Profile() {
                                                     <h3 className="font-semibold text-lg mb-2">Payment Summary</h3>
                                                     <div className="flex justify-between text-sm">
                                                         <span>Subtotal:</span>
-                                                        <span>${selectedOrderDetails.sous_total}</span>
+                                                        <span>{selectedOrderDetails.sous_total} FCFA</span>
                                                     </div>
                                                     <div className="flex justify-between text-sm">
                                                         <span>Delivery Fee:</span>
-                                                        <span>${selectedOrderDetails.frais_livraison}</span>
+                                                        <span>{selectedOrderDetails.frais_livraison} FCFA</span>
                                                     </div>
                                                     <div className="flex justify-between text-sm">
                                                         <span>Discount:</span>
-                                                        <span>-${selectedOrderDetails.montant_reduction}</span>
+                                                        <span>-{selectedOrderDetails.montant_reduction} FCFA</span>
                                                     </div>
                                                     <div className="flex justify-between font-bold text-lg mt-2">
                                                         <span>Total:</span>
-                                                        <span>${selectedOrderDetails.total}</span>
+                                                        <span>{selectedOrderDetails.total} FCFA</span>
                                                     </div>
                                                 </div>
                                             </div>

@@ -46,7 +46,7 @@ function Cart() {
                         {cart.map((item) => (
                             <div key={item.id} className="flex gap-4 items-center">
                                 <Image 
-                                    src={item.produit.images[0]?.url_image || '/logo.png'}
+                                    src={item?.produit?.images?.[0]?.url_image || '/logo.png'}
                                     width={60}
                                     height={60}
                                     alt={item.produit.nom}

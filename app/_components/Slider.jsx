@@ -50,6 +50,7 @@ function Slider({ sliderList }) {
                                     <Image 
                                         src={imageUrl}
                                         alt={title}
+                                        sizes="100vw"
                                         fill
                                         className='object-cover rounded-2xl'
                                         priority={true}
