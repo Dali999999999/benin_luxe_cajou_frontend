@@ -66,13 +66,13 @@ function Header() {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <button className="flex items-center gap-2 font-medium text-slate-700 hover:text-primary transition-colors">
-                                <LayoutGrid className="w-5 h-5" /> Categories
+                                <LayoutGrid className="w-5 h-5" /> Catégories
                             </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-64">
-                            <DropdownMenuLabel>Browse Categories</DropdownMenuLabel>
+                            <DropdownMenuLabel>Parcourir les catégories</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => handleCategoryClick(null)}>All</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleCategoryClick(null)}>Tout</DropdownMenuItem>
                             {catalogueStructure.map((cat, idx) => (
                                 <DropdownMenuItem key={idx} onClick={() => handleCategoryClick(cat)} className="flex items-center gap-3">
                                     <Image src={cat.image_url || '/logo.png'} alt={cat.nom} width={25} height={25} unoptimized />
@@ -109,7 +109,7 @@ function Header() {
                     {/* Login / Profile */}
                     {!isLogin ? (
                         <Link href="/sign-in">
-                            <Button className="bg-primary hover:bg-primary-dark">Login</Button>
+                            <Button className="bg-primary hover:bg-primary-dark">Se connecter</Button>
                         </Link>
                     ) : (
                         <DropdownMenu>
@@ -119,10 +119,10 @@ function Header() {
                                 </button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="mr-4">
-                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                <DropdownMenuLabel>Mon Compte</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <Link href="/profile"><DropdownMenuItem>Profile</DropdownMenuItem></Link>
-                                <DropdownMenuItem onClick={OnSignOut} className="text-red-500">Sign Out</DropdownMenuItem>
+                                <Link href="/profile"><DropdownMenuItem>Profil</DropdownMenuItem></Link>
+                                <DropdownMenuItem onClick={OnSignOut} className="text-red-500">Se déconnecter</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     )}
@@ -169,13 +169,13 @@ function Header() {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <button className="flex items-center gap-2 font-medium text-slate-700 hover:text-primary transition-colors">
-                                <LayoutGrid className="w-5 h-5" /> Categories
+                                <LayoutGrid className="w-5 h-5" /> Catégories
                             </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-full">
-                            <DropdownMenuLabel>Browse Categories</DropdownMenuLabel>
+                            <DropdownMenuLabel>Parcourir les catégories</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => handleCategoryClick(null)}>All</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleCategoryClick(null)}>Tout</DropdownMenuItem>
                             {catalogueStructure.map((cat, idx) => (
                                 <DropdownMenuItem key={idx} onClick={() => handleCategoryClick(cat)} className="flex items-center gap-3">
                                     <Image src={cat.image_url || '/logo.png'} alt={cat.nom} width={25} height={25} unoptimized />
@@ -186,19 +186,19 @@ function Header() {
                     </DropdownMenu>
 
                     {/* About / Contact */}
-                    <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="font-medium text-slate-700 hover:text-primary transition-colors">About Us</Link>
+                    <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="font-medium text-slate-700 hover:text-primary transition-colors">Qui sommes-nous</Link>
                     <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="font-medium text-slate-700 hover:text-primary transition-colors">Contact</Link>
 
                     {/* Home */}
                     <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2 font-medium text-slate-700 hover:text-primary transition-colors">
-                        <Home className="w-5 h-5" /> Home
+                        <Home className="w-5 h-5" /> Accueil
                     </Link>
 
                     {/* Cart in mobile menu - can be kept or removed depending on preference */}
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <button className="relative p-2 rounded-md bg-slate-100 hover:bg-slate-200 transition-colors w-full text-left flex items-center gap-2">
-                                <ShoppingBag className="w-5 h-5" /> Cart
+                                <ShoppingBag className="w-5 h-5" /> Panier
                                 <span className="ml-auto w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white text-xs">{cart?.length}</span>
                             </button>
                         </DropdownMenuTrigger>
@@ -210,14 +210,14 @@ function Header() {
                     {/* Login / Profile */}
                     {!isLogin ? (
                         <Link href="/sign-in" onClick={() => setMobileMenuOpen(false)}>
-                            <Button className="bg-primary hover:bg-primary-dark w-full">Connectez-vous</Button>
+                            <Button className="bg-primary hover:bg-primary-dark w-full">Se connecter</Button>
                         </Link>
                     ) : (
                         <>
                             <Link href="/profile" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2 font-medium text-slate-700 hover:text-primary transition-colors">
-                                <CircleUserRound className="w-5 h-5" /> Profile
+                                <CircleUserRound className="w-5 h-5" /> Profil
                             </Link>
-                            <button onClick={() => { OnSignOut(); setMobileMenuOpen(false) }} className="text-red-500 font-medium text-left">Sign Out</button>
+                            <button onClick={() => { OnSignOut(); setMobileMenuOpen(false) }} className="text-red-500 font-medium text-left">Se déconnecter</button>
                         </>
                     )}
                 </div>

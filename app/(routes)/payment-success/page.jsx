@@ -6,8 +6,11 @@ import { toast } from 'sonner';
 import { CheckCircle, XCircle, Hourglass, LoaderIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useContext } from 'react';
+import { AuthContext } from '@/app/_context/AuthContext';
 
 function PaymentSuccess() {
+    const { isLogin } = useContext(AuthContext);
     const router = useRouter();
     const searchParams = useSearchParams();
     const [paymentStatus, setPaymentStatus] = useState('checking'); // checking, paid, pending, failed
@@ -15,48 +18,49 @@ function PaymentSuccess() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const id = searchParams.get('order_id');
-        if (!id) {
-            toast.error("ID de commande introuvable dans l'URL.");
-            router.push('/'); // Redirect home if no order_id
-            return;
-        }
-        setOrderId(id);
-
-        const jwt = localStorage.getItem('access_token');
-        if (!jwt) {
-            toast.error("Vous devez être connecté pour voir cette page.");
+        if (isLogin === false) {
             router.push('/sign-in');
             return;
         }
 
-        const checkStatus = async () => {
-            try {
-                const resp = await GlobalApi.getPaymentStatus(id);
-                setPaymentStatus(resp.payment_status);
-                // Clear local cart after successful payment check
-                // This assumes the API has already cleared the server-side cart
-                // For robustness, we might need a dedicated API call to clear cart
-                // or manage cart state more globally.
-                // For now, we'll simulate clearing the cart by calling manageCart with 0 quantity for all items.
-                // A more robust solution would be to have a clearCart API endpoint.
-                const cartItems = await GlobalApi.getCart();
-                if (cartItems && cartItems.length > 0) {
-                    for (const item of cartItems) {
-                        await GlobalApi.removeFromCart(item.produit.id);
-                    }
-                }
-
-            } catch (error) {
-                console.error("Erreur lors de la vérification du statut de paiement:", error);
-                setPaymentStatus('failed');
-                toast.error("Échec de la vérification du statut de paiement.");
+        if (isLogin === true) {
+            setLoading(true);
+            const id = searchParams.get('order_id');
+            if (!id) {
+                toast.error("ID de commande introuvable dans l'URL.");
+                router.push('/'); // Redirect home if no order_id
+                setLoading(false);
+                return;
             }
-            setLoading(false);
-        };
+            setOrderId(id);
 
-        checkStatus();
-    }, [searchParams, router]);
+            const checkStatus = async () => {
+                try {
+                    const resp = await GlobalApi.getPaymentStatus(id);
+                    setPaymentStatus(resp.payment_status);
+                    
+                    if (resp.payment_status === 'paye') {
+                        // Clear cart logic can be improved by using context
+                        const cartItems = await GlobalApi.getCart();
+                        if (cartItems && cartItems.length > 0) {
+                            for (const item of cartItems) {
+                                await GlobalApi.removeFromCart(item.produit.id);
+                            }
+                        }
+                    }
+
+                } catch (error) {
+                    console.error("Erreur lors de la vérification du statut de paiement:", error);
+                    setPaymentStatus('failed');
+                    toast.error("Échec de la vérification du statut de paiement.");
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            checkStatus();
+        }
+    }, [isLogin, searchParams, router]);
 
     const renderContent = () => {
         switch (paymentStatus) {
@@ -99,12 +103,16 @@ function PaymentSuccess() {
         }
     };
 
-    if (loading) {
+    if (isLogin === null || (isLogin && loading)) {
         return (
             <div className="flex items-center justify-center min-h-[60vh]">
                 <LoaderIcon className="w-10 h-10 animate-spin text-primary" />
             </div>
         );
+    }
+
+    if (isLogin === false) {
+        return <div className="p-10 text-center">Redirection vers la page de connexion...</div>;
     }
 
     return (

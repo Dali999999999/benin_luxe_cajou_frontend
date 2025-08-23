@@ -36,9 +36,9 @@ function Cart() {
 
     return (
         <div className="p-4">
-            <h2 className="text-lg font-bold mb-4">My Cart</h2>
+            <h2 className="text-lg font-bold mb-4">Mon Panier</h2>
             {!cart || cart.length === 0 ? (
-                <p>Your cart is empty.</p>
+                <p>Votre panier est vide.</p>
             ) : (
                 <>
                     {/* ITEM LIST */}

@@ -43,12 +43,12 @@ function VerifyAccount() {
             localStorage.removeItem('session_id'); // Clean up session_id
             updateAuthStatus(true, token); // Update auth status
 
-            toast("Account Verified Successfully!")
+            toast("Compte vérifié avec succès !")
             router.push('/');
             setLoader(false)
         }, (e) => {
             setLoader(false)
-            toast(e?.response?.data?.message || 'An error occurred')
+            toast(e?.response?.data?.message || 'Une erreur est survenue')
         })
     }
 
@@ -57,10 +57,10 @@ function VerifyAccount() {
 
         setIsResending(true);
         GlobalApi.resendVerificationCode(email).then(resp => {
-            toast("A new code has been sent to your email.");
+            toast("Un nouveau code a été envoyé à votre e-mail.");
             setResendCooldown(60); // Reset cooldown
         }).catch(error => {
-            toast(error?.response?.data?.message || "An error occurred while resending the code.");
+            toast(error?.response?.data?.message || "Une erreur est survenue lors du renvoi du code.");
         }).finally(() => {
             setIsResending(false);
         });
@@ -72,8 +72,8 @@ function VerifyAccount() {
         <div className='flex items-baseline justify-center my-10'>
             <div className='flex flex-col items-center justify-center p-10 bg-slate-100 border border-gray-200'>
                 <Image src='/logo.png' width={200} height={200} alt='logo' />
-                <h2 className='font-bold text-3xl'>Verify Your Account</h2>
-                <h2 className='text-gray-500'>Enter the 6-digit code sent to <strong>{email}</strong></h2>
+                <h2 className='font-bold text-3xl'>Vérifiez votre compte</h2>
+                <h2 className='text-gray-500'>Entrez le code à 6 chiffres envoyé à <strong>{email}</strong></h2>
 
                 {/* Inputs */}
                 <div className='w-full flex flex-col gap-5 mt-7'>
@@ -81,18 +81,18 @@ function VerifyAccount() {
                     <Button onClick={() => onVerifyAccount()}
                         disabled={!code || code.length < 6}
                     >
-                        {loader ? <LoaderIcon className='animate-spin' /> : "Verify and Sign In"}
+                        {loader ? <LoaderIcon className='animate-spin' /> : "Vérifier et se connecter"}
                     </Button>
                     <div className='text-sm text-gray-500 text-center'>
-                        Didn't receive a code?
+                        Vous n'avez pas reçu de code ?
                         <button 
                             onClick={handleResendCode} 
                             disabled={isResendButtonDisabled}
                             className='text-blue-500 disabled:text-gray-400 disabled:cursor-not-allowed ml-1'
                         >
                             {isResending 
-                                ? "Sending..." 
-                                : (resendCooldown > 0 ? `Resend in ${resendCooldown}s` : "Resend")}
+                                ? "Envoi en cours..." 
+                                : (resendCooldown > 0 ? `Renvoyer dans ${resendCooldown}s` : "Renvoyer")}
                         </button>
                     </div>
                 </div>

@@ -92,7 +92,7 @@ function HomeClient({ catalogueStructure, initialProducts, sliderList }) {
             layout="fill"
             objectFit="cover"
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-start p-8 md:p-16">
+          <div className="absolute inset-0 flex flex-col justify-center items-center text-center md:items-start md:text-left p-8 md:p-16">
             <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight drop-shadow-lg">
               Livraison rapide
               <br />
