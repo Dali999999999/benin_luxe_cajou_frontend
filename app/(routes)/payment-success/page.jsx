@@ -23,7 +23,7 @@ function PaymentSuccess() {
         }
         setOrderId(id);
 
-        const jwt = localStorage.getItem('jwt');
+        const jwt = localStorage.getItem('access_token');
         if (!jwt) {
             toast.error("Vous devez être connecté pour voir cette page.");
             router.push('/sign-in');
