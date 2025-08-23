@@ -18,13 +18,13 @@ function VerifyAccount() {
     const [isResending, setIsResending] = useState(false);
     const router = useRouter();
     const params = useSearchParams();
-    const email = params.get('email');
+    const verificationToken = params.get('token');
 
     useEffect(() => {
-        if (!email) {
-            router.push('/create-account');
+        if (!verificationToken) {
+            router.push('/create-account'); // Redirect if no token is present
         }
-    }, [email, router]);
+    }, [verificationToken, router]);
 
     useEffect(() => {
         if (resendCooldown === 0) return;
@@ -37,11 +37,14 @@ function VerifyAccount() {
 
     const onVerifyAccount = () => {
         setLoader(true)
-        GlobalApi.verifyAccount(email, code).then(resp => {
-            const token = resp.access_token;
-            localStorage.setItem('jwt', token);
-            localStorage.removeItem('session_id'); // Clean up session_id
-            updateAuthStatus(true, token); // Update auth status
+        GlobalApi.verifyAccount(verificationToken, code).then(resp => {
+            const tokens = {
+                access_token: resp.access_token,
+                refresh_token: resp.refresh_token
+            };
+            updateAuthStatus(true, tokens); // Met à jour le contexte et le localStorage
+            localStorage.removeItem('session_id'); // Nettoie l'ID de session invité
+            sessionStorage.removeItem('verification_email'); // Clean up email from sessionStorage
 
             toast("Compte vérifié avec succès !")
             router.push('/');
@@ -55,8 +58,14 @@ function VerifyAccount() {
     const handleResendCode = () => {
         if (resendCooldown > 0 || isResending) return;
 
+        const email = sessionStorage.getItem('verification_email');
+        if (!email) {
+            toast.error("Email non trouvé. Veuillez vous réinscrire.");
+            return;
+        }
+
         setIsResending(true);
-        GlobalApi.resendVerificationCode(email).then(resp => {
+        GlobalApi.resendVerificationCode({ email: email }).then(resp => {
             toast("Un nouveau code a été envoyé à votre e-mail.");
             setResendCooldown(60); // Reset cooldown
         }).catch(error => {
@@ -73,7 +82,7 @@ function VerifyAccount() {
             <div className='flex flex-col items-center justify-center p-10 bg-slate-100 border border-gray-200'>
                 <Image src='/logo.png' width={200} height={200} alt='logo' />
                 <h2 className='font-bold text-3xl'>Vérifiez votre compte</h2>
-                <h2 className='text-gray-500'>Entrez le code à 6 chiffres envoyé à <strong>{email}</strong></h2>
+                <h2 className='text-gray-500'>Entrez le code à 6 chiffres envoyé à votre adresse e-mail</h2>
 
                 {/* Inputs */}
                 <div className='w-full flex flex-col gap-5 mt-7'>

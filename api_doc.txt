@@ -1,74 +1,142 @@
-Absolument. C'est une excellente idée de tout récapituler pour avoir une "source de vérité" unique et claire.
+Absolument. C'est la dernière étape pour finaliser ce nouveau système d'inscription sécurisé. Heureusement, pour le frontend, les changements sont minimes et très logiques.
 
-Voici l'inventaire complet de **toutes les routes** que le site web client doit appeler, avec leur rôle, leur méthode HTTP, et surtout, la **bonne URL formatée** pour éviter toute erreur de `404 Not Found` ou de redirection.
+Le flux utilisateur reste presque identique, ce sont surtout les "données en transit" qui changent.
 
----
-
-## **Inventaire Complet des Routes de l'API pour le Site Web Client**
-
-### **URL de Base : `https://benin-luxe-cajou-api.onrender.com`**
+Voici la feuille de route complète et détaillée pour le développeur frontend.
 
 ---
 
-### **Section 1 : 🌐 Navigation & Consultation Publique**
-*(Ces routes sont accessibles sans authentification)*
+## **Feuille de Route Frontend : Adaptation au Nouveau Système de Vérification**
 
-| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
-| :--- | :--- | :--- | :--- |
-| **Charger la structure du site** | `GET` | `/api/catalogue-structure` | **Appel principal.** Récupère les catégories et leurs types de produits en une seule fois pour construire la navigation. |
-| **Afficher les produits** | `GET` | `/api/products` | Récupère la liste des produits. Peut être filtrée avec `?type_id=2`. |
-| **Voir un produit** | `GET` | `/api/products/{id}` | Récupère les détails d'un produit spécifique. |
-| **Voir les zones de livraison** | `GET` | `/api/delivery-zones` | Récupère la liste des zones et tarifs pour la page de checkout. |
+### **Objectif**
 
----
+Mettre à jour le processus d'inscription pour utiliser le nouveau système de token opaque (JWT de vérification) au lieu de l'email, afin de renforcer la sécurité et d'empêcher l'énumération d'utilisateurs.
 
-### **Section 2 : 👤 Authentification Client**
-*(Ces routes n'ont pas le préfixe `/api`)*
+### **Le Nouveau Flux de Données (Ce qui a changé)**
 
-| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
-| :--- | :--- | :--- | :--- |
-| **Inscription (étape 1)** | `POST` | `/auth/register` | Envoie les infos du formulaire pour créer un compte inactif. |
-| **Vérification (étape 2)** | `POST` | `/auth/verify-account` | Envoie le code reçu par email pour activer le compte et obtenir les tokens. |
-| **Connexion** | `POST` | `/auth/login` | Connecte un utilisateur existant et renvoie les tokens. |
-| **Récupérer un nouveau token** | `POST` | `/auth/refresh` | Envoie le `refresh_token` pour obtenir un nouvel `access_token`. |
-| **Mot de passe oublié** | `POST` | `/auth/forgot-password` | Demande l'envoi d'un code de réinitialisation. |
-| **Réinitialiser le mot de passe**| `POST` | `/auth/reset-password` | Envoie le code et le nouveau mot de passe. |
+*   **Avant :**
+    1.  `Register` -> L'API renvoie un simple message.
+    2.  Le Frontend stocke l'**email**.
+    3.  `Verify` -> Le Frontend envoie l'**email** + le **code**.
+
+*   **MAINTENANT (Le Nouveau Flux) :**
+    1.  `Register` -> L'API renvoie un message **ET** un `verification_token`.
+    2.  Le Frontend stocke le `verification_token`.
+    3.  `Verify` -> Le Frontend envoie le `verification_token` + le **code**.
+
+L'email n'est plus utilisé comme identifiant pendant la phase de vérification.
 
 ---
 
-### **Section 3 : 🛒 Gestion du Panier d'Achat**
-*(Route unique qui gère tout, avec un slash final très important)*
+### **Étape 1 : Mettre à Jour l'Appel d'Inscription (Register)**
 
-| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
-| :--- | :--- | :--- | :--- |
-| **Récupérer / Modifier le panier** | `POST` | `/api/cart/` | **Route unifiée.** Gère la récupération, l'ajout, la modification et la suppression d'articles. |
+C'est la modification la plus importante. Il faut maintenant récupérer et stocker le `verification_token` renvoyé par l'API.
+
+**Dans votre fonction `handleRegister` (ou équivalente) :**
+
+1.  **L'appel API ne change pas :** Vous envoyez toujours `nom`, `prenom`, `email`, `password` et le `session_id`.
+
+2.  **La gestion de la réponse de succès change :**
+    *   **Récupérez le `verification_token`** depuis la réponse de l'API.
+    *   **Naviguez vers l'écran de vérification**, mais maintenant, au lieu de passer l'email, vous devez passer ce **`verification_token`**.
+
+**Exemple de Pseudo-code JavaScript/Axios :**
+
+```javascript
+// Dans votre page/composant d'inscription
+
+async function handleRegister(formData) {
+  try {
+    const sessionId = localStorage.getItem('session_id');
+    const response = await apiClient.post('/auth/register', {
+      ...formData,
+      session_id: sessionId
+    });
+
+    if (response.status === 201) {
+      // --- NOUVELLE LOGIQUE ---
+      // 1. Récupérer le token depuis la réponse
+      const { verification_token } = response.data;
+
+      // 2. Naviguer vers la page de vérification en passant le token
+      //    (par exemple, via les paramètres de l'URL)
+      router.push(`/verify-account?token=${verification_token}`); 
+    }
+  } catch (error) {
+    // ... gestion des erreurs (email déjà utilisé, etc.)
+  }
+}
+```
 
 ---
 
-### **Section 4 : 🧑‍💼 Profil de l'Utilisateur**
-*(Toutes ces routes nécessitent une authentification)*
+### **Étape 2 : Mettre à Jour l'Écran de Vérification de Code**
 
-| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
-| :--- | :--- | :--- | :--- |
-| **Voir son profil** | `GET` | `/api/profile/` | Récupère les informations de base de l'utilisateur. |
-| **Modifier son profil** | `PUT` | `/api/profile/` | Met à jour le nom, prénom ou téléphone. |
-| **Changer son mot de passe** | `PUT` | `/api/profile/password` | Modifie le mot de passe après vérification de l'ancien. |
-| **Voir son historique** | `GET` | `/api/profile/orders` | Récupère la liste (résumé) de toutes ses commandes. |
-| **Voir le détail d'une commande**| `GET` | `/api/profile/orders/{id}` | Récupère les détails complets d'une commande (produits, suivi). |
-| **Lister ses adresses** | `GET` | `/api/profile/addresses` | Récupère toutes les adresses de livraison enregistrées. |
-| **Ajouter une adresse** | `POST` | `/api/profile/addresses` | Enregistre une nouvelle adresse. |
-| **Modifier une adresse** | `PUT` | `/api/profile/addresses/{id}`| Met à jour une adresse existante. |
-| **Supprimer une adresse** | `DELETE`| `/api/profile/addresses/{id}`| Supprime une adresse. |
-| **Définir par défaut** | `POST` | `/api/profile/addresses/{id}/set-default`| Marque une adresse comme étant celle par défaut. |
+Cet écran doit maintenant récupérer le `verification_token` depuis l'URL et l'utiliser dans son appel API.
 
----
+**Dans votre page/composant `verify-account` :**
 
-### **Section 5 : 💳 Processus de Paiement**
-*(Nécessite une authentification)*
+1.  **Récupérer le token depuis l'URL :**
+    *   Utilisez le routeur de votre framework (Next.js, React Router) pour lire les paramètres de la query string.
+    *   Stockez la valeur du paramètre `token` dans l'état de votre composant.
 
-| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
-| :--- | :--- | :--- | :--- |
-| **Lancer le paiement** | `POST` | `/api/payment/initialize` | Envoie les infos de livraison pour créer la commande et obtenir l'URL FedaPay. |
-| **Vérifier le statut après paiement**| `GET` | `/api/payment/status/{order_id}`| Confirme le paiement après la redirection depuis FedaPay. |
+    **Exemple avec Next.js (dans la page `verify-account.jsx`) :**
+    ```javascript
+    import { useSearchParams } from 'next/navigation';
 
-Cette liste est la référence définitive pour le développement du frontend. En respectant scrupuleusement ces routes, la communication avec l'API sera fluide et sans erreur.
+    // À l'intérieur de votre composant
+    const searchParams = useSearchParams();
+    const verificationToken = searchParams.get('token'); // Récupère le token depuis l'URL
+    ```
+
+2.  **L'interface utilisateur ne change pas :** Elle demande toujours à l'utilisateur de taper le code à 6 chiffres reçu par email.
+
+3.  **L'appel API change :** Quand l'utilisateur soumet le code, vous envoyez maintenant le `verification_token` (récupéré de l'URL) au lieu de l'email.
+
+**Exemple de Pseudo-code JavaScript/Axios :**
+
+```javascript
+// Dans votre page/composant de vérification
+
+async function handleVerify(code) {
+  try {
+    const sessionId = localStorage.getItem('session_id');
+
+    // --- NOUVELLE LOGIQUE ---
+    // On envoie le token de l'URL et le code, plus besoin de l'email
+    const response = await apiClient.post('/auth/verify-account', {
+      token: verificationToken, // Le token récupéré de l'URL
+      code: code,
+      session_id: sessionId
+    });
+
+    if (response.status === 200) {
+      const { access_token, refresh_token } = response.data;
+      
+      // La logique de succès est la même :
+      localStorage.setItem('access_token', access_token);
+      localStorage.setItem('refresh_token', refresh_token);
+      localStorage.removeItem('session_id'); // Très important !
+      
+      // Mettre à jour l'état global et rediriger...
+    }
+  } catch (error) {
+    // Gérer les erreurs (code incorrect, token expiré, etc.)
+    // Affichez le `error.response.data.msg` à l'utilisateur
+  }
+}
+```
+
+### **Résumé de la Checklist Frontend**
+
+1.  [ ] **Page d'Inscription (`/register`) :**
+    *   [ ] Modifier la fonction `handleRegister`.
+    *   [ ] À la réception d'une réponse `201`, extraire le `verification_token`.
+    *   [ ] Rediriger vers la page `/verify-account` en passant ce token dans l'URL (ex: `/verify-account?token=...`).
+
+2.  **Page de Vérification (`/verify-account`) :**
+    *   [ ] Au chargement, récupérer le `verification_token` depuis les paramètres de l'URL.
+    *   [ ] Modifier la fonction `handleVerify`.
+    *   [ ] L'appel API doit maintenant envoyer `token` et `code` (et non plus `email` et `code`).
+
+Ces modifications sont très ciblées et rendront votre processus d'inscription beaucoup plus sécurisé, exactement comme vous l'avez conçu.
