@@ -14,6 +14,11 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+    Sheet,
+    SheetContent,
+    SheetTrigger,
+} from "@/components/ui/sheet";
 
 import GlobalApi from '../_utils/GlobalApi';
 import Cart from './Cart';
@@ -94,17 +99,17 @@ function Header() {
                     </Link>
 
                     {/* Cart */}
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
+                    <Sheet>
+                        <SheetTrigger asChild>
                             <button className="relative p-2 rounded-full hover:bg-slate-100 transition-colors">
                                 <ShoppingBag className="w-6 h-6 text-slate-600" />
                                 <span className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white text-xs">{cart?.length}</span>
                             </button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-80 mr-4">
+                        </SheetTrigger>
+                        <SheetContent className="p-0">
                             <Cart cart={cart} onUpdateCart={getCartData} />
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                        </SheetContent>
+                    </Sheet>
 
                     {/* Login / Profile */}
                     {!isLogin ? (
@@ -132,17 +137,17 @@ function Header() {
                 {/* Mobile Icons (Cart + Burger) */}
                 <div className="flex items-center gap-2 lg:hidden">
                      {/* Cart */}
-                     <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
+                     <Sheet>
+                        <SheetTrigger asChild>
                             <button className="relative p-2 rounded-full hover:bg-slate-100 transition-colors">
                                 <ShoppingBag className="w-6 h-6 text-slate-600" />
                                 <span className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white text-xs">{cart?.length}</span>
                             </button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-80 mr-4">
+                        </SheetTrigger>
+                        <SheetContent className="p-0">
                             <Cart cart={cart} onUpdateCart={getCartData} />
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                        </SheetContent>
+                    </Sheet>
 
                     {/* Mobile burger */}
                     <button
@@ -195,17 +200,17 @@ function Header() {
                     </Link>
 
                     {/* Cart in mobile menu - can be kept or removed depending on preference */}
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
+                    <Sheet>
+                        <SheetTrigger asChild>
                             <button className="relative p-2 rounded-md bg-slate-100 hover:bg-slate-200 transition-colors w-full text-left flex items-center gap-2">
                                 <ShoppingBag className="w-5 h-5" /> Panier
                                 <span className="ml-auto w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white text-xs">{cart?.length}</span>
                             </button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-full">
+                        </SheetTrigger>
+                        <SheetContent className="p-0">
                             <Cart cart={cart} onUpdateCart={getCartData} />
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                        </SheetContent>
+                    </Sheet>
 
                     {/* Login / Profile */}
                     {!isLogin ? (
