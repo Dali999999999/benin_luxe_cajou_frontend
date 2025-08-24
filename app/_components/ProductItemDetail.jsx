@@ -40,7 +40,7 @@ function ProductItemDetail({ product }) {
                 opts={{
                     loop: true,
                 }}
-                className="w-full max-w-sm"
+                className="w-full max-w-sm mx-auto"
             >
                 <CarouselContent>
                     {product.images.map((image, index) => (
@@ -59,28 +59,31 @@ function ProductItemDetail({ product }) {
             </Carousel>
 
             {/* Information */}
-            <div className='flex flex-col gap-3'>
-                <h2 className='text-2xl font-bold'>{product.nom}</h2>
-                <h2 className='text-sm text-gray-500'>{product.description}</h2>
-                <div className='flex gap-3'>
-                    <h2 className='font-bold text-3xl'>{product.prix_unitaire} FCFA</h2>
-                </div>
-                <h2 className='font-medium text-lg'>Quantité <span className='text-sm text-gray-500'>(En stock : {product.stock_disponible})</span></h2>
-                <div className='flex flex-col items-baseline gap-3'>
-                    <div className='flex gap-5 items-center flex-nowrap'>
-                        <div className='p-2 border flex gap-10 items-center px-5'>
-                            <button disabled={quantity === 1} onClick={() => setQuantity(quantity - 1)}>-</button>
-                            <h2>{quantity}</h2>
-                            <button disabled={quantity >= product.stock_disponible} onClick={() => setQuantity(quantity + 1)}>+</button>
+            <div className='flex flex-col md:justify-between md:h-full'>
+                {/* Contenu principal qui scrolle */}
+                <div className="md:pb-0 pb-32"> {/* Espace pour la barre d'action mobile */}
+                    <h2 className='text-2xl font-bold'>{product.nom}</h2>
+                    <p className='text-sm text-gray-500 mt-2'>{product.description}</p>
+                    <div className='flex gap-3 my-4'>
+                        <h2 className='font-bold text-3xl'>{product.prix_unitaire} FCFA</h2>
+                    </div>
+                    <h3 className='font-medium text-lg'>Quantité <span className='text-sm text-gray-500'>(En stock : {product.stock_disponible})</span></h3>
+                    <div className='flex items-center gap-2 md:gap-4 mt-2'>
+                        <div className='p-2 border flex items-center gap-3 md:gap-6 px-2 md:px-4'>
+                            <button disabled={quantity === 1} onClick={() => setQuantity(quantity - 1)} className="text-base md:text-lg font-bold">-</button>
+                            <span className="text-base md:text-lg">{quantity}</span>
+                            <button disabled={quantity >= product.stock_disponible} onClick={() => setQuantity(quantity + 1)} className="text-base md:text-lg font-bold">+</button>
                         </div>
-                        <h2 className='text-2xl font-bold'> = {(quantity * product.prix_unitaire).toFixed(2)} FCFA</h2>
+                        <p className='text-base md:text-2xl font-bold'> = {(quantity * product.prix_unitaire).toFixed(2)} FCFA</p>
                     </div>
-                    <div className="sticky !bottom-5 !left-0 left-0 right-0 z-50">
-                        <Button disabled={loading || product.stock_disponible <= 0} className="flex gap-3 w-full" onClick={() => addToCart()}>
-                            <ShoppingBasket />
-                            {loading? <LoaderCircle className='animate-spin' /> : product.stock_disponible <= 0 ? 'En rupture de stock' : 'Ajouter au panier'}
-                        </Button>
-                    </div>
+                </div>
+
+                {/* Barre d'action fixe sur mobile, statique sur desktop */}
+                <div className="md:static fixed bottom-0 left-0 w-full bg-white p-4 border-t md:border-0 md:p-0 z-10">
+                    <Button disabled={loading || product.stock_disponible <= 0} className="w-full flex gap-3" onClick={() => addToCart()}>
+                        <ShoppingBasket />
+                        {loading ? <LoaderCircle className='animate-spin' /> : product.stock_disponible <= 0 ? 'En rupture de stock' : 'Ajouter au panier'}
+                    </Button>
                 </div>
             </div>
         </div>
