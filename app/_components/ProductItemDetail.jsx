@@ -34,7 +34,7 @@ function ProductItemDetail({ product }) {
 
 
     return (
-        <div className='grid grid-cols-1 md:grid-cols-2 p-7 bg-white text-black'>
+        <div className='grid grid-cols-1 md:grid-cols-2 p-7 pb-20 md:pb-7 bg-white text-black'>
             {/* Image */}
             <Carousel
                 opts={{
@@ -67,7 +67,7 @@ function ProductItemDetail({ product }) {
                 </div>
                 <h2 className='font-medium text-lg'>Quantité <span className='text-sm text-gray-500'>(En stock : {product.stock_disponible})</span></h2>
                 <div className='flex flex-col items-baseline gap-3'>
-                    <div className='flex gap-3 items-center'>
+                    <div className='flex gap-5 items-center flex-nowrap'>
                         <div className='p-2 border flex gap-10 items-center px-5'>
                             <button disabled={quantity === 1} onClick={() => setQuantity(quantity - 1)}>-</button>
                             <h2>{quantity}</h2>
@@ -75,10 +75,12 @@ function ProductItemDetail({ product }) {
                         </div>
                         <h2 className='text-2xl font-bold'> = {(quantity * product.prix_unitaire).toFixed(2)} FCFA</h2>
                     </div>
-                    <Button disabled={loading || product.stock_disponible === 0} className="flex gap-3" onClick={() => addToCart()}>
-                        <ShoppingBasket />
-                        {loading? <LoaderCircle className='animate-spin' /> : product.stock_disponible === 0 ? 'En rupture de stock' : 'Ajouter au panier'}
-                    </Button>
+                    <div className="sticky !bottom-5 !left-0 left-0 right-0 z-50">
+                        <Button disabled={loading || product.stock_disponible <= 0} className="flex gap-3 w-full" onClick={() => addToCart()}>
+                            <ShoppingBasket />
+                            {loading? <LoaderCircle className='animate-spin' /> : product.stock_disponible <= 0 ? 'En rupture de stock' : 'Ajouter au panier'}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

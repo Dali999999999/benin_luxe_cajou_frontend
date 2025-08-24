@@ -1,97 +1,13 @@
-Excellent log ! C'est la preuve que votre système de logging est maintenant très efficace. Vous avez trouvé un cas d'utilisation que nous n'avions pas encore implémenté côté frontend.
+Unhandled Runtime Error
+ReferenceError: cartIconRef is not defined
 
-Ce que vous voyez est **normal**, et ce n'est pas un bug de l'API. C'est le signe que l'API fonctionne exactement comme prévu en rejetant une requête invalide.
+Source
+app\_components\FlyToCartAnimation.jsx (64:43) @ cartIconRef
 
-### **Le Diagnostic : La Requête est Vide**
-
-Décortiquons le log, qui est très simple et direct :
-1.  **`OPTIONS /auth/resend-verification HTTP/1.1" 200 0` :** C'est la requête de pré-vérification (preflight) du navigateur. Elle réussit, ce qui signifie que la configuration CORS est parfaite.
-2.  **`POST /auth/resend-verification HTTP/1.1" 400 23` :** C'est la requête réelle. L'API l'a reçue mais l'a rejetée avec une erreur `400 Bad Request`.
-
-**Pourquoi une erreur `400` ?**
-Regardons le code de la fonction correspondante dans `app/client_auth/routes.py` :
-
-```python
-@client_auth_bp.route('/resend-verification', methods=['POST'])
-def resend_verification_code():
-    data = request.get_json()
-    email = data.get('email')
-
-    # CETTE LIGNE EST LA CAUSE DE L'ERREUR 400
-    if not email:
-        return jsonify({"msg": "Email requis"}), 400
-        
-    # ... le reste de la logique ...
-```
-L'erreur `400` est renvoyée **uniquement** si le champ `email` est manquant dans le corps de la requête.
-
-**Conclusion :** Votre frontend appelle bien l'endpoint `POST /auth/resend-verification`, mais il envoie une requête avec un **corps JSON vide** ou un corps qui ne contient pas la clé `"email"`.
-
----
-
-### **La Solution : La Feuille de Route Complète pour le Frontend**
-
-Le problème se résout entièrement côté frontend. Voici la logique exacte à implémenter pour le bouton "Renvoyer le code" sur la page de vérification.
-
-#### **Le Contrat de l'API**
-
-L'API a une exigence simple pour cette route :
-*   **Endpoint :** `POST /auth/resend-verification`
-*   **Corps de la Requête (JSON) :** Doit contenir l'email de l'utilisateur.
-    ```json
-    {
-      "email": "l_email_de_l_utilisateur@example.com"
-    }
-    ```
-
-#### **Comment le Frontend Obtient-il l'Email ?**
-
-C'est le point clé. Lorsque l'utilisateur s'inscrit, il est redirigé vers la page de vérification. Pour que cette page puisse renvoyer le code, elle doit connaître l'email de l'utilisateur.
-
-**La meilleure pratique est la suivante :**
-
-1.  **Sur la page d'inscription :** Après avoir soumis le formulaire avec succès (`POST /auth/register`), avant de rediriger l'utilisateur, **sauvegardez l'email qu'il vient de taper** dans le `sessionStorage` du navigateur. `sessionStorage` est comme `localStorage`, mais il s'efface quand l'onglet est fermé, ce qui est parfait pour une donnée temporaire.
-
-    **Exemple en JavaScript :**
-    ```javascript
-    // Après une réponse 201 de /auth/register
-    const email = formData.email;
-    sessionStorage.setItem('verification_email', email);
-    
-    // Ensuite, rediriger vers la page de vérification
-    router.push(`/verify-account?token=${response.data.verification_token}`);
-    ```
-
-2.  **Sur la page de vérification (`/verify-account`) :**
-    *   Vous récupérez déjà le `token` depuis l'URL.
-    *   Maintenant, vous pouvez aussi récupérer l'email depuis le `sessionStorage`.
-
-#### **La Logique du Bouton "Renvoyer le code"**
-
-Quand l'utilisateur clique sur ce bouton, le frontend doit :
-
-1.  **Lire l'email** depuis le `sessionStorage`.
-    ```javascript
-    const email = sessionStorage.getItem('verification_email');
-    if (!email) {
-      // Gérer l'erreur, l'email n'a pas été trouvé
-      return;
-    }
-    ```
-2.  **Faire l'appel API** en incluant cet email dans le corps de la requête.
-    ```javascript
-    try {
-      await apiClient.post('/auth/resend-verification', { email: email });
-      // Afficher un message de succès à l'utilisateur :
-      // "Un nouveau code a été envoyé à votre adresse."
-    } catch (error) {
-      // Gérer les erreurs
-    }
-    ```
-3.  **Ne pas oublier le nettoyage :** Une fois que l'utilisateur a **vérifié son compte avec succès** (`POST /auth/verify-account`), pensez à supprimer l'email du `sessionStorage`.
-    ```javascript
-    // Après avoir reçu le token JWT de /verify-account
-    sessionStorage.removeItem('verification_email');
-    ```
-
-En suivant cette logique, votre bouton "Renvoyer le code" fonctionnera parfaitement et les erreurs `400` disparaîtront.
+  62 |     return () => clearTimeout(timeoutId); // Cleanup timeout on unmount
+  63 |   }
+> 64 | }, [animationTrigger, resetFlyAnimation, cartIconRef]); 
+     |                                         ^
+  65 |
+  66 | return null; // This component doesn't render anything visible itself
+  67 | };

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -64,14 +66,18 @@
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
   }
-}
- 
-@layer base {
+
   * {
     @apply border-border;
   }
+  html {
+    @apply scroll-smooth;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
   }
 }
 
@@ -101,4 +107,17 @@
     scrollbar-color: var(--sb-thumb-color)
                      var(--sb-track-color);
   }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.cart-bounce {
+  animation: bounce 0.5s ease-in-out;
 }

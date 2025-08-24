@@ -40,7 +40,7 @@ function Slider({ sliderList }) {
                         
                         // --- MISE À JOUR DU LIEN DU BOUTON ---
                         // Le bouton pointe maintenant vers l'ancre #products si aucun lien n'est fourni
-                        const buttonLink = slider.attributes?.buttonLink || '#products'; 
+                        const buttonLink = slider.attributes?.buttonLink || '#liste-produits'; 
 
                         if (!imageUrl) return null;
 

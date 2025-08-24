@@ -32,6 +32,7 @@ function Header() {
     const { cart, getCartData } = useContext(CartContext);
     const { setSelectedCategory } = useContext(CategoryContext);
     const { isLogin, updateAuthStatus } = useContext(AuthContext);
+    const [isCartAnimating, setIsCartAnimating] = useState(false);
 
     const router = useRouter();
     const pathname = usePathname();
@@ -39,6 +40,13 @@ function Header() {
     useEffect(() => {
         GlobalApi.getCatalogueStructure().then(resp => setCatalogueStructure(resp));
     }, []);
+
+    useEffect(() => {
+        if (cart?.length > 0) {
+            setIsCartAnimating(true);
+            setTimeout(() => setIsCartAnimating(false), 500);
+        }
+    }, [cart]);
 
     const handleCategoryClick = (category) => {
         if (pathname !== '/') router.push('/');
@@ -61,7 +69,7 @@ function Header() {
                         <Image src="/logo.png" alt="Bénin Luxe Cajou" width={100} height={80} className="cursor-pointer h-auto" />
                     </Link>
                     <Link href="/">
-                    <span className="text-2xl font-bold text-primary">Bénin Luxe Cajou</span>
+                    <span className="text-2xl font-bold text-primary font-serif">Bénin Luxe Cajou</span>
                     </Link>
                 </div>
 
@@ -101,7 +109,7 @@ function Header() {
                     {/* Cart */}
                     <Sheet>
                         <SheetTrigger asChild>
-                            <button className="relative p-2 rounded-full hover:bg-slate-100 transition-colors">
+                            <button className={`relative p-2 rounded-full hover:bg-slate-100 transition-colors ${isCartAnimating ? 'cart-bounce' : ''}`}>
                                 <ShoppingBag className="w-6 h-6 text-slate-600" />
                                 <span className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white text-xs">{cart?.length}</span>
                             </button>
@@ -139,7 +147,7 @@ function Header() {
                      {/* Cart */}
                      <Sheet>
                         <SheetTrigger asChild>
-                            <button className="relative p-2 rounded-full hover:bg-slate-100 transition-colors">
+                            <button className={`relative p-2 rounded-full hover:bg-slate-100 transition-colors ${isCartAnimating ? 'cart-bounce' : ''}`}>
                                 <ShoppingBag className="w-6 h-6 text-slate-600" />
                                 <span className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white text-xs">{cart?.length}</span>
                             </button>

@@ -8,6 +8,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { LoaderIcon } from 'lucide-react'
 import Image from 'next/image'
+import ProfileInfoSkeleton from '@/app/_components/ProfileInfoSkeleton';
+import OrderListSkeleton from '@/app/_components/OrderListSkeleton';
+import OrderDetailSkeleton from '@/app/_components/OrderDetailSkeleton';
 
 function Profile() {
     const { isLogin, updateAuthStatus } = useContext(AuthContext);
@@ -120,8 +123,13 @@ function Profile() {
 
     if (isLogin === null || (isLogin && loading)) {
         return (
-            <div className="flex items-center justify-center min-h-[60vh]">
-                <LoaderIcon className="w-10 h-10 animate-spin text-primary" />
+            <div className="p-10 px-4 md:px-16 space-y-8">
+                <div className="flex justify-between items-center">
+                    <div className="h-8 w-1/4 bg-slate-200 rounded animate-pulse"></div>
+                    <div className="h-10 w-24 bg-slate-200 rounded animate-pulse"></div>
+                </div>
+                <ProfileInfoSkeleton />
+                <OrderListSkeleton />
             </div>
         );
     }
@@ -193,7 +201,7 @@ function Profile() {
             <div className="bg-slate-100 border border-gray-200 p-6 rounded-lg">
                 <h2 className="text-xl font-semibold mb-4">Mes Commandes</h2>
                 {ordersLoading ? (
-                    <div className="text-center">Chargement des commandes...</div>
+                    <OrderListSkeleton />
                 ) : orders.length === 0 ? (
                     <div className="text-center">Aucune commande trouvée.</div>
                 ) : (
@@ -220,7 +228,7 @@ function Profile() {
                                 {expandedOrderId === order.id && (
                                     <div className="mt-4 p-4 border-t border-gray-200 bg-white">
                                         {orderDetailsLoading ? (
-                                            <div className="text-center">Chargement des détails de la commande...</div>
+                                            <OrderDetailSkeleton />
                                         ) : selectedOrderDetails && (
                                             <div className="space-y-4">
                                                 {/* Order Tracking Timeline */}
