@@ -65,11 +65,10 @@ function SignIn() {
             // On met à jour le contexte d'authentification avec les deux tokens
             updateAuthStatus(true, tokens);
 
-            toast("Connexion réussie");
+            toast("Login Successfully");
 
             const redirectUrl = searchParams.get('redirect');
-            // SECURITY FIX: Validate that the redirect URL is a local path
-            if (redirectUrl && redirectUrl.startsWith('/')) {
+            if (redirectUrl) {
                 router.push(redirectUrl);
             } else {
                 router.push('/');
@@ -79,7 +78,7 @@ function SignIn() {
 
         }).catch(e => {
             console.log(e);
-            toast(e?.response?.data?.message || "Identifiants invalides");
+            toast(e?.response?.data?.message || "Invalid credentials");
             setLoader(false);
         });
     }
@@ -90,10 +89,10 @@ function SignIn() {
         try {
             // On peut garder GlobalApi pour les fonctions non encore migrées
             await GlobalApi.forgotPassword(forgotEmail);
-            toast.success("Un code de réinitialisation a été envoyé à votre e-mail.");
+            toast.success("A reset code has been sent to your email.");
             setForgotStep(2);
         } catch (error) {
-            toast.error(error?.response?.data?.message || "Une erreur est survenue.");
+            toast.error(error?.response?.data?.message || "An error occurred.");
         } finally {
             setIsForgotLoading(false);
         }
@@ -104,14 +103,14 @@ function SignIn() {
         setIsForgotLoading(true);
         try {
             await GlobalApi.resetPassword(forgotEmail, code, newPassword);
-            toast.success("Mot de passe mis à jour avec succès ! Vous pouvez maintenant vous connecter.");
+            toast.success("Password updated successfully! You can now log in.");
             setIsDialogOpen(false);
             setForgotStep(1);
             setForgotEmail('');
             setCode('');
             setNewPassword('');
         } catch (error) {
-            toast.error(error?.response?.data?.message || "Le code est incorrect ou a expiré.");
+            toast.error(error?.response?.data?.message || "The code is incorrect or has expired.");
         } finally {
             setIsForgotLoading(false);
         }
@@ -122,35 +121,35 @@ function SignIn() {
         <div className='flex items-baseline justify-center my-10'>
             <div className='flex flex-col items-center justify-center p-10 bg-slate-100 border border-gray-200'>
                 <Image src='/logo.png' width={200} height={200} alt='logo' />
-                <h2 className='font-bold text-3xl'>Se connecter</h2>
-                <h2 className='text-gray-500'>Entrez votre e-mail et mot de passe pour vous connecter</h2>
+                <h2 className='font-bold text-3xl'>Sign In</h2>
+                <h2 className='text-gray-500'>Enter your Email and Password to Sign In</h2>
 
                 <div className='w-full flex flex-col gap-5 mt-7'>
-                    <Input type="email" placeholder='nom@exemple.com' onChange={(e) => setEmail(e.target.value)} />
-                    <Input type='password' placeholder='Mot de passe' onChange={(e) => setPassword(e.target.value)} />
+                    <Input type="email" placeholder='name@example.com' onChange={(e) => setEmail(e.target.value)} />
+                    <Input type='password' placeholder='password' onChange={(e) => setPassword(e.target.value)} />
                     <Button onClick={() => onSignIn()}
                         disabled={!(email || password)}
                     >
-                        {loader ? <LoaderIcon className='animate-spin' /> : "Se connecter"}
+                        {loader ? <LoaderIcon className='animate-spin' /> : "Sign In"}
                     </Button>
                     <div className='text-sm text-center'>
                         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                             <DialogTrigger asChild>
-                                <button className='text-blue-500 hover:underline'>Mot de passe oublié ?</button>
+                                <button className='text-blue-500 hover:underline'>Forgot Password?</button>
                             </DialogTrigger>
                             <DialogContent>
                                 {forgotStep === 1 && (
                                     <form onSubmit={handleRequestCode}>
                                         <DialogHeader>
-                                            <DialogTitle>Réinitialiser votre mot de passe</DialogTitle>
+                                            <DialogTitle>Reset your password</DialogTitle>
                                             <DialogDescription>
-                                                Entrez votre adresse e-mail et nous vous enverrons un code pour réinitialiser votre mot de passe.
+                                                Enter your email address and we'll send you a code to reset your password.
                                             </DialogDescription>
                                         </DialogHeader>
                                         <div className="py-4">
                                             <Input 
                                                 type="email" 
-                                                placeholder="nom@exemple.com" 
+                                                placeholder="name@example.com" 
                                                 value={forgotEmail}
                                                 onChange={(e) => setForgotEmail(e.target.value)} 
                                                 required
@@ -158,7 +157,7 @@ function SignIn() {
                                         </div>
                                         <DialogFooter>
                                             <Button type="submit" disabled={isForgotLoading}>
-                                                {isForgotLoading ? <LoaderIcon className='animate-spin' /> : "Envoyer le code"}
+                                                {isForgotLoading ? <LoaderIcon className='animate-spin' /> : "Send Reset Code"}
                                             </Button>
                                         </DialogFooter>
                                     </form>
@@ -166,21 +165,21 @@ function SignIn() {
                                 {forgotStep === 2 && (
                                     <form onSubmit={handleResetPassword}>
                                         <DialogHeader>
-                                            <DialogTitle>Vérifiez vos e-mails</DialogTitle>
+                                            <DialogTitle>Check your email</DialogTitle>
                                             <DialogDescription>
-                                                Entrez le code que vous avez reçu et votre nouveau mot de passe.
+                                                Enter the code you received and your new password.
                                             </DialogDescription>
                                         </DialogHeader>
                                         <div className="py-4 space-y-4">
                                             <Input 
-                                                placeholder="Code de vérification" 
+                                                placeholder="Verification Code" 
                                                 value={code}
                                                 onChange={(e) => setCode(e.target.value)} 
                                                 required
                                             />
                                             <Input 
                                                 type="password"
-                                                placeholder="Nouveau mot de passe"
+                                                placeholder="New Password"
                                                 value={newPassword}
                                                 onChange={(e) => setNewPassword(e.target.value)}
                                                 required
@@ -188,7 +187,7 @@ function SignIn() {
                                         </div>
                                         <DialogFooter>
                                             <Button type="submit" disabled={isForgotLoading}>
-                                                {isForgotLoading ? <LoaderIcon className='animate-spin' /> : "Mettre à jour le mot de passe"}
+                                                {isForgotLoading ? <LoaderIcon className='animate-spin' /> : "Update Password"}
                                             </Button>
                                         </DialogFooter>
                                     </form>
@@ -197,9 +196,9 @@ function SignIn() {
                         </Dialog>
                     </div>
                     <p className='text-center'>
-                        Vous n'avez pas de compte ?
+                        Don't have an account?
                         <Link href={'/create-account'} className='text-blue-500 ml-1'>
-                            Créer un nouveau compte
+                            Create new account
                         </Link>
                     </p>
                 </div>

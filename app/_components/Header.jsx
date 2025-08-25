@@ -14,11 +14,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-    Sheet,
-    SheetContent,
-    SheetTrigger,
-} from "@/components/ui/sheet";
 
 import GlobalApi from '../_utils/GlobalApi';
 import Cart from './Cart';
@@ -32,7 +27,6 @@ function Header() {
     const { cart, getCartData } = useContext(CartContext);
     const { setSelectedCategory } = useContext(CategoryContext);
     const { isLogin, updateAuthStatus } = useContext(AuthContext);
-    const [isCartAnimating, setIsCartAnimating] = useState(false);
 
     const router = useRouter();
     const pathname = usePathname();
@@ -40,13 +34,6 @@ function Header() {
     useEffect(() => {
         GlobalApi.getCatalogueStructure().then(resp => setCatalogueStructure(resp));
     }, []);
-
-    useEffect(() => {
-        if (cart?.length > 0) {
-            setIsCartAnimating(true);
-            setTimeout(() => setIsCartAnimating(false), 500);
-        }
-    }, [cart]);
 
     const handleCategoryClick = (category) => {
         if (pathname !== '/') router.push('/');
@@ -69,7 +56,7 @@ function Header() {
                         <Image src="/logo.png" alt="Bénin Luxe Cajou" width={100} height={80} className="cursor-pointer h-auto" />
                     </Link>
                     <Link href="/">
-                    <span className="text-2xl font-bold text-primary font-serif">Bénin Luxe Cajou</span>
+                    <span className="text-2xl font-bold text-primary">Bénin Luxe Cajou</span>
                     </Link>
                 </div>
 
@@ -79,13 +66,13 @@ function Header() {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <button className="flex items-center gap-2 font-medium text-slate-700 hover:text-primary transition-colors">
-                                <LayoutGrid className="w-5 h-5" /> Catégories
+                                <LayoutGrid className="w-5 h-5" /> Categories
                             </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-64">
-                            <DropdownMenuLabel>Parcourir les catégories</DropdownMenuLabel>
+                            <DropdownMenuLabel>Browse Categories</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => handleCategoryClick(null)}>Tout</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleCategoryClick(null)}>All</DropdownMenuItem>
                             {catalogueStructure.map((cat, idx) => (
                                 <DropdownMenuItem key={idx} onClick={() => handleCategoryClick(cat)} className="flex items-center gap-3">
                                     <Image src={cat.image_url || '/logo.png'} alt={cat.nom} width={25} height={25} unoptimized />
@@ -107,22 +94,22 @@ function Header() {
                     </Link>
 
                     {/* Cart */}
-                    <Sheet>
-                        <SheetTrigger asChild>
-                            <button className={`relative p-2 rounded-full hover:bg-slate-100 transition-colors ${isCartAnimating ? 'cart-bounce' : ''}`}>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <button className="relative p-2 rounded-full hover:bg-slate-100 transition-colors">
                                 <ShoppingBag className="w-6 h-6 text-slate-600" />
                                 <span className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white text-xs">{cart?.length}</span>
                             </button>
-                        </SheetTrigger>
-                        <SheetContent className="p-0">
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-80 mr-4">
                             <Cart cart={cart} onUpdateCart={getCartData} />
-                        </SheetContent>
-                    </Sheet>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
 
                     {/* Login / Profile */}
                     {!isLogin ? (
                         <Link href="/sign-in">
-                            <Button className="bg-primary hover:bg-primary-dark">Se connecter</Button>
+                            <Button className="bg-primary hover:bg-primary-dark">Login</Button>
                         </Link>
                     ) : (
                         <DropdownMenu>
@@ -132,10 +119,10 @@ function Header() {
                                 </button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="mr-4">
-                                <DropdownMenuLabel>Mon Compte</DropdownMenuLabel>
+                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <Link href="/profile"><DropdownMenuItem>Profil</DropdownMenuItem></Link>
-                                <DropdownMenuItem onClick={OnSignOut} className="text-red-500">Se déconnecter</DropdownMenuItem>
+                                <Link href="/profile"><DropdownMenuItem>Profile</DropdownMenuItem></Link>
+                                <DropdownMenuItem onClick={OnSignOut} className="text-red-500">Sign Out</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     )}
@@ -145,17 +132,17 @@ function Header() {
                 {/* Mobile Icons (Cart + Burger) */}
                 <div className="flex items-center gap-2 lg:hidden">
                      {/* Cart */}
-                     <Sheet>
-                        <SheetTrigger asChild>
-                            <button className={`relative p-2 rounded-full hover:bg-slate-100 transition-colors ${isCartAnimating ? 'cart-bounce' : ''}`}>
+                     <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <button className="relative p-2 rounded-full hover:bg-slate-100 transition-colors">
                                 <ShoppingBag className="w-6 h-6 text-slate-600" />
                                 <span className="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white text-xs">{cart?.length}</span>
                             </button>
-                        </SheetTrigger>
-                        <SheetContent className="p-0">
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-80 mr-4">
                             <Cart cart={cart} onUpdateCart={getCartData} />
-                        </SheetContent>
-                    </Sheet>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
 
                     {/* Mobile burger */}
                     <button
@@ -182,13 +169,13 @@ function Header() {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <button className="flex items-center gap-2 font-medium text-slate-700 hover:text-primary transition-colors">
-                                <LayoutGrid className="w-5 h-5" /> Catégories
+                                <LayoutGrid className="w-5 h-5" /> Categories
                             </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-full">
-                            <DropdownMenuLabel>Parcourir les catégories</DropdownMenuLabel>
+                            <DropdownMenuLabel>Browse Categories</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => handleCategoryClick(null)}>Tout</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleCategoryClick(null)}>All</DropdownMenuItem>
                             {catalogueStructure.map((cat, idx) => (
                                 <DropdownMenuItem key={idx} onClick={() => handleCategoryClick(cat)} className="flex items-center gap-3">
                                     <Image src={cat.image_url || '/logo.png'} alt={cat.nom} width={25} height={25} unoptimized />
@@ -199,38 +186,38 @@ function Header() {
                     </DropdownMenu>
 
                     {/* About / Contact */}
-                    <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="font-medium text-slate-700 hover:text-primary transition-colors">Qui sommes-nous</Link>
+                    <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="font-medium text-slate-700 hover:text-primary transition-colors">About Us</Link>
                     <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="font-medium text-slate-700 hover:text-primary transition-colors">Contact</Link>
 
                     {/* Home */}
                     <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2 font-medium text-slate-700 hover:text-primary transition-colors">
-                        <Home className="w-5 h-5" /> Accueil
+                        <Home className="w-5 h-5" /> Home
                     </Link>
 
                     {/* Cart in mobile menu - can be kept or removed depending on preference */}
-                    <Sheet>
-                        <SheetTrigger asChild>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
                             <button className="relative p-2 rounded-md bg-slate-100 hover:bg-slate-200 transition-colors w-full text-left flex items-center gap-2">
-                                <ShoppingBag className="w-5 h-5" /> Panier
+                                <ShoppingBag className="w-5 h-5" /> Cart
                                 <span className="ml-auto w-5 h-5 flex items-center justify-center rounded-full bg-primary text-white text-xs">{cart?.length}</span>
                             </button>
-                        </SheetTrigger>
-                        <SheetContent className="p-0">
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-full">
                             <Cart cart={cart} onUpdateCart={getCartData} />
-                        </SheetContent>
-                    </Sheet>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
 
                     {/* Login / Profile */}
                     {!isLogin ? (
                         <Link href="/sign-in" onClick={() => setMobileMenuOpen(false)}>
-                            <Button className="bg-primary hover:bg-primary-dark w-full">Se connecter</Button>
+                            <Button className="bg-primary hover:bg-primary-dark w-full">Connectez-vous</Button>
                         </Link>
                     ) : (
                         <>
                             <Link href="/profile" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2 font-medium text-slate-700 hover:text-primary transition-colors">
-                                <CircleUserRound className="w-5 h-5" /> Profil
+                                <CircleUserRound className="w-5 h-5" /> Profile
                             </Link>
-                            <button onClick={() => { OnSignOut(); setMobileMenuOpen(false) }} className="text-red-500 font-medium text-left">Se déconnecter</button>
+                            <button onClick={() => { OnSignOut(); setMobileMenuOpen(false) }} className="text-red-500 font-medium text-left">Sign Out</button>
                         </>
                     )}
                 </div>

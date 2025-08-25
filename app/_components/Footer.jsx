@@ -107,7 +107,7 @@ function Footer() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-10">
           <div>
-            <h3 className="font-serif font-bold text-lg mb-4 text-white">Informations</h3>
+            <h3 className="font-bold text-lg mb-4 text-white">Informations</h3>
             <ul className="space-y-3">
               <li>
                 <Link
@@ -137,7 +137,7 @@ function Footer() {
           </div>
 
           <div>
-            <h3 className="font-serif font-bold text-lg mb-4 text-white">Support</h3>
+            <h3 className="font-bold text-lg mb-4 text-white">Support</h3>
             <ul className="space-y-3">
               <li>
                 <Link
@@ -167,7 +167,7 @@ function Footer() {
           </div>
 
           <div>
-            <h3 className="font-serif font-bold text-lg mb-4 text-white">Produits</h3>
+            <h3 className="font-bold text-lg mb-4 text-white">Produits</h3>
             <ul className="space-y-3">
               <li>
                 <Link

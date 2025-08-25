@@ -32,7 +32,7 @@ function CategoryList({ onFilterByType, onFilterByCategory }) {
     return (
         <div className='mt-12'>
             <h2 className='text-3xl font-bold text-slate-800 text-center mb-10'>
-                Acheter par Type dans "{selectedCategory.nom}"
+                Shop by Type in "{selectedCategory.nom}"
             </h2>
             
             <div className='flex flex-wrap gap-4 sm:gap-6 justify-center'>
@@ -48,7 +48,7 @@ function CategoryList({ onFilterByType, onFilterByCategory }) {
                         }
                     `}
                 >
-                    <span className="text-lg font-semibold">Tous les types</span>
+                    <span className="text-lg font-semibold">All Types</span>
                 </button>
 
                 {/* Boutons pour les types spécifiques */}

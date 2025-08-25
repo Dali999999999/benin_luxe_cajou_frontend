@@ -47,13 +47,13 @@ const login = (credentials) => {
     return apiClient.post('/auth/login', credentials).then(resp => resp.data);
 };
 
-const verifyAccount = (token, code) => {
-    const payload = { token, code, session_id: getSessionId() };
+const verifyAccount = (email, code) => {
+    const payload = { email, code, session_id: getSessionId() };
     return apiClient.post('/auth/verify-account', payload).then(resp => resp.data);
 };
 
-const resendVerificationCode = (token) => {
-    return apiClient.post('/auth/resend-verification', { token }).then(resp => resp.data);
+const resendVerificationCode = (email) => {
+    return apiClient.post('/auth/resend-verification', { email }).then(resp => resp.data);
 };
 
 const forgotPassword = (email) => {
