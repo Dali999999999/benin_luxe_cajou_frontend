@@ -1,87 +1,38 @@
-[15:08:20.711] Running build in Washington, D.C., USA (East) – iad1
-[15:08:20.713] Build machine configuration: 2 cores, 8 GB
-[15:08:20.782] Cloning github.com/Dali999999999/benin_luxe_cajou_frontend (Branch: main, Commit: 33c2f28)
-[15:08:21.141] Previous build caches not available
-[15:08:21.952] Cloning completed: 1.170s
-[15:08:24.077] Running "vercel build"
-[15:08:24.495] Vercel CLI 46.0.2
-[15:08:24.849] Installing dependencies...
-[15:08:33.701] 
-[15:08:33.703] added 214 packages in 8s
-[15:08:33.703] 
-[15:08:33.704] 43 packages are looking for funding
-[15:08:33.705]   run `npm fund` for details
-[15:08:33.742] Detected Next.js version: 14.1.1
-[15:08:33.746] Running "npm run build"
-[15:08:33.861] 
-[15:08:33.861] > n@0.1.0 build
-[15:08:33.861] > next build
-[15:08:33.861] 
-[15:08:34.381] Attention: Next.js now collects completely anonymous telemetry regarding usage.
-[15:08:34.381] This information is used to shape Next.js' roadmap and prioritize features.
-[15:08:34.382] You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
-[15:08:34.382] https://nextjs.org/telemetry
-[15:08:34.382] 
-[15:08:34.459]    ▲ Next.js 14.1.1
-[15:08:34.459] 
-[15:08:34.527]    Creating an optimized production build ...
-[15:08:53.078]  ✓ Compiled successfully
-[15:08:53.079]    Linting and checking validity of types ...
-[15:08:53.209]    Collecting page data ...
-[15:08:55.215]    Generating static pages (0/22) ...
-[15:09:30.424] 
-   Generating static pages (5/22) 
-[15:09:31.367] 
-   Generating static pages (10/22) 
-[15:09:31.383]  ⨯ useSearchParams() should be wrapped in a suspense boundary at page "/sign-in". Read more: https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
-[15:09:31.384]     at r (/vercel/path0/.next/server/chunks/340.js:61:12113)
-[15:09:31.384]     at h (/vercel/path0/.next/server/chunks/340.js:61:23906)
-[15:09:31.384]     at g (/vercel/path0/.next/server/app/(auth)/sign-in/page.js:1:3194)
-[15:09:31.384]     at nM (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:47419)
-[15:09:31.385]     at nL (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64674)
-[15:09:31.385]     at nI (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:46806)
-[15:09:31.385]     at nM (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:47570)
-[15:09:31.386]     at nM (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61663)
-[15:09:31.386]     at nL (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64674)
-[15:09:31.386]     at nB (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67657)
-[15:09:31.386] 
-[15:09:31.387] Error occurred prerendering page "/sign-in". Read more: https://nextjs.org/docs/messages/prerender-error
-[15:09:31.387] 
-[15:09:31.399]  ⨯ useSearchParams() should be wrapped in a suspense boundary at page "/verify-account". Read more: https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
-[15:09:31.400]     at r (/vercel/path0/.next/server/chunks/340.js:61:12113)
-[15:09:31.400]     at h (/vercel/path0/.next/server/chunks/340.js:61:23906)
-[15:09:31.400]     at p (/vercel/path0/.next/server/app/(auth)/verify-account/page.js:1:3231)
-[15:09:31.400]     at nM (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:47419)
-[15:09:31.400]     at nL (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64674)
-[15:09:31.400]     at nI (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:46806)
-[15:09:31.401]     at nM (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:47570)
-[15:09:31.401]     at nM (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61663)
-[15:09:31.401]     at nL (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64674)
-[15:09:31.401]     at nB (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67657)
-[15:09:31.401] 
-[15:09:31.402] Error occurred prerendering page "/verify-account". Read more: https://nextjs.org/docs/messages/prerender-error
-[15:09:31.402] 
-[15:09:31.504] 
-   Generating static pages (16/22) 
-[15:09:31.521]  ⨯ useSearchParams() should be wrapped in a suspense boundary at page "/payment-success". Read more: https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
-[15:09:31.522]     at r (/vercel/path0/.next/server/chunks/340.js:61:12113)
-[15:09:31.522]     at h (/vercel/path0/.next/server/chunks/340.js:61:23906)
-[15:09:31.522]     at h (/vercel/path0/.next/server/app/(routes)/payment-success/page.js:6:693)
-[15:09:31.522]     at nM (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:47419)
-[15:09:31.523]     at nL (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64674)
-[15:09:31.523]     at nI (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:46806)
-[15:09:31.524]     at nM (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:47570)
-[15:09:31.524]     at nM (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:61663)
-[15:09:31.524]     at nL (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:64674)
-[15:09:31.524]     at nB (/vercel/path0/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:12:67657)
-[15:09:31.526] 
-[15:09:31.527] Error occurred prerendering page "/payment-success". Read more: https://nextjs.org/docs/messages/prerender-error
-[15:09:31.527] 
-[15:09:39.771] 
- ✓ Generating static pages (22/22) 
-[15:09:39.774] 
-[15:09:39.775] > Export encountered errors on following paths:
-[15:09:39.775] 	/(auth)/sign-in/page: /sign-in
-[15:09:39.775] 	/(auth)/verify-account/page: /verify-account
-[15:09:39.775] 	/(routes)/payment-success/page: /payment-success
-[15:09:39.799] Error: Command "npm run build" exited with 1
+Build Error
+Failed to compile
+
+Next.js (14.2.32) is outdated (learn more)
+./app/_utils/GlobalApi.jsx
+Error: 
+  × Unterminated string constant
+     ╭─[C:\Users\dalin\AmandeCajou\frontend\app\_utils\GlobalApi.jsx:107:1]
+ 107 │ 
+ 108 │ const placeOrder = (data) => apiClient.post('/api/checkout/place-order', data).then(resp => resp.data);
+ 109 │ const initializePayment = (data) => apiClient.post('/api/payment/initialize', data).then(resp => resp.data);
+ 110 │ """const getPaymentStatus = (orderId) => apiClient.get(`/api/payment/status/${orderId}`).then(resp => resp.data);
+     ·   ───────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ 111 │ 
+ 112 │ 
+ 113 │ // =========== Section 6 : 📢 Actions Publiques (Newsletter, Feedback) ===========
+     ╰────
+
+  × Expected ';', '}' or <eof>
+     ╭─[C:\Users\dalin\AmandeCajou\frontend\app\_utils\GlobalApi.jsx:107:1]
+ 107 │ 
+ 108 │ const placeOrder = (data) => apiClient.post('/api/checkout/place-order', data).then(resp => resp.data);
+ 109 │ const initializePayment = (data) => apiClient.post('/api/payment/initialize', data).then(resp => resp.data);
+ 110 │ """const getPaymentStatus = (orderId) => apiClient.get(`/api/payment/status/${orderId}`).then(resp => resp.data);
+     · ─┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────
+     ·  ╰── This is the expression part of an expression statement
+ 111 │ 
+ 112 │ 
+ 113 │ // =========== Section 6 : 📢 Actions Publiques (Newsletter, Feedback) ===========
+     ╰────
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/_utils/GlobalApi.jsx
+./app/_components/Header.jsx
+./app/layout.js

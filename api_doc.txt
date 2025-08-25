@@ -1,74 +1,181 @@
-Absolument. C'est une excellente idée de tout récapituler pour avoir une "source de vérité" unique et claire.
-
-Voici l'inventaire complet de **toutes les routes** que le site web client doit appeler, avec leur rôle, leur méthode HTTP, et surtout, la **bonne URL formatée** pour éviter toute erreur de `404 Not Found` ou de redirection.
+Absolument. Voici la feuille de route complète et détaillée, destinée au développeur frontend, pour intégrer les nouvelles fonctionnalités de **Newsletter** et de **Formulaire de Contact (Feedback)**.
 
 ---
 
-## **Inventaire Complet des Routes de l'API pour le Site Web Client**
+## **Feuille de Route Frontend : Newsletter & Feedback**
 
-### **URL de Base : `https://benin-luxe-cajou-api.onrender.com`**
+### **Objectif**
 
----
-
-### **Section 1 : 🌐 Navigation & Consultation Publique**
-*(Ces routes sont accessibles sans authentification)*
-
-| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
-| :--- | :--- | :--- | :--- |
-| **Charger la structure du site** | `GET` | `/api/catalogue-structure` | **Appel principal.** Récupère les catégories et leurs types de produits en une seule fois pour construire la navigation. |
-| **Afficher les produits** | `GET` | `/api/products` | Récupère la liste des produits. Peut être filtrée avec `?type_id=2`. |
-| **Voir un produit** | `GET` | `/api/products/{id}` | Récupère les détails d'un produit spécifique. |
-| **Voir les zones de livraison** | `GET` | `/api/delivery-zones` | Récupère la liste des zones et tarifs pour la page de checkout. |
+1.  Permettre à n'importe quel visiteur de s'inscrire à une newsletter.
+2.  Permettre à n'importe quel visiteur d'envoyer un message à la vendeuse via un formulaire de contact.
 
 ---
 
-### **Section 2 : 👤 Authentification Client**
-*(Ces routes n'ont pas le préfixe `/api`)*
+### **Partie 1 : Implémentation de la Newsletter**
 
-| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
-| :--- | :--- | :--- | :--- |
-| **Inscription (étape 1)** | `POST` | `/auth/register` | Envoie les infos du formulaire pour créer un compte inactif. |
-| **Vérification (étape 2)** | `POST` | `/auth/verify-account` | Envoie le code reçu par email pour activer le compte et obtenir les tokens. |
-| **Connexion** | `POST` | `/auth/login` | Connecte un utilisateur existant et renvoie les tokens. |
-| **Récupérer un nouveau token** | `POST` | `/auth/refresh` | Envoie le `refresh_token` pour obtenir un nouvel `access_token`. |
-| **Mot de passe oublié** | `POST` | `/auth/forgot-password` | Demande l'envoi d'un code de réinitialisation. |
-| **Réinitialiser le mot de passe**| `POST` | `/auth/reset-password` | Envoie le code et le nouveau mot de passe. |
+Cette fonctionnalité est généralement placée dans le pied de page (footer) du site pour être accessible depuis n'importe quelle page.
+
+#### **1. Interface Utilisateur (UI)**
+
+*   **Composants :**
+    1.  Un `TextField` (ou `<input type="email">`) pour que l'utilisateur puisse saisir son adresse email.
+    2.  Un `Button` (ou `<button>`) avec le texte "S'inscrire" ou une icône d'envoi (avion en papier).
+    3.  Une petite zone de texte pour afficher les messages de succès ou d'erreur.
+
+**Exemple de design simple :**
+```
+--------------------------------------------------
+|                                                |
+|      Inscrivez-vous à notre Newsletter         |
+|                                                |
+|   [ votre.email@example.com ]  [ S'inscrire ]  |
+|                                                |
+|      Merci ! Vous êtes maintenant inscrit.     | <--- Message de retour
+|                                                |
+--------------------------------------------------
+```
+
+#### **2. Logique du Composant (React/Next.js)**
+
+1.  **Gérer l'état :** Utilisez un état local pour gérer la valeur de l'input de l'email, l'état de chargement, et les messages de retour.
+    ```javascript
+    const [email, setEmail] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [message, setMessage] = useState('');
+    ```
+2.  **Logique de soumission (`handleSubmit`) :** Cette fonction est appelée quand l'utilisateur clique sur le bouton "S'inscrire".
+    *   Faites une validation de base côté client (ex: l'email n'est pas vide et a un format valide).
+    *   Si la validation passe, mettez `isLoading` à `true`.
+    *   Appelez l'API.
+
+#### **3. Appel API**
+
+*   **Endpoint :** `POST /api/newsletter/subscribe`
+*   **Authentification :** Aucune (c'est une route publique).
+*   **Corps de la Requête (JSON) :**
+    ```json
+    {
+      "email": "l_email_saisi_par_l_utilisateur"
+    }
+    ```
+*   **Gestion des Réponses :**
+    *   **Succès (`201 Created`) :**
+        *   La réponse contient : `{ "msg": "Merci ! Vous êtes maintenant inscrit(e)..." }`
+        *   **Action :** Affichez ce message de succès à l'utilisateur, peut-être en vert. Effacez le champ de l'email.
+    *   **Erreur (`409 Conflict`) :**
+        *   L'email est déjà inscrit.
+        *   La réponse contient : `{ "msg": "Cet email est déjà inscrit." }`
+        *   **Action :** Affichez ce message à l'utilisateur, peut-être en orange.
+    *   **Erreur (`400 Bad Request`) :**
+        *   L'email est manquant ou invalide.
+        *   **Action :** Affichez un message d'erreur clair.
+    *   **Finalement :** Mettez `isLoading` à `false`.
 
 ---
 
-### **Section 3 : 🛒 Gestion du Panier d'Achat**
-*(Route unique qui gère tout, avec un slash final très important)*
+### **Partie 2 : Implémentation du Formulaire de Contact (Feedback)**
 
-| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
-| :--- | :--- | :--- | :--- |
-| **Récupérer / Modifier le panier** | `POST` | `/api/cart/` | **Route unifiée.** Gère la récupération, l'ajout, la modification et la suppression d'articles. |
+Cette fonctionnalité aura généralement sa propre page dédiée (ex: `/contact`).
+
+#### **1. Interface Utilisateur (UI)**
+
+*   **Composants :**
+    1.  Un `TextField` pour le **Prénom** (`prenom`).
+    2.  Un `TextField` pour le **Nom** (`nom`).
+    3.  Un `TextField` pour l'**Email** (`email`).
+    4.  Un `TextArea` (un `TextField` avec `maxLines` > 1) pour le **Message** (`message`).
+    5.  Un `Button` "Envoyer le Message".
+    6.  Une zone pour les messages de retour.
+
+#### **2. Logique du Composant**
+
+1.  **Gérer l'état :** Créez des états pour chaque champ du formulaire, ainsi que pour le chargement et les messages.
+    ```javascript
+    const [formData, setFormData] = useState({
+      prenom: '',
+      nom: '',
+      email: '',
+      message: ''
+    });
+    const [isLoading, setIsLoading] = useState(false);
+    const [responseMessage, setResponseMessage] = useState('');
+    ```
+2.  **Logique de soumission (`handleSendFeedback`) :**
+    *   Validez que tous les champs requis sont remplis.
+    *   Mettez `isLoading` à `true`.
+    *   Appelez l'API.
+
+#### **3. Appel API**
+
+*   **Endpoint :** `POST /api/feedback`
+*   **Authentification :** Aucune.
+*   **Corps de la Requête (JSON) :**
+    ```json
+    {
+      "prenom": "valeur_du_champ_prenom",
+      "nom": "valeur_du_champ_nom",
+      "email": "valeur_du_champ_email",
+      "message": "valeur_du_champ_message"
+    }
+    ```
+*   **Gestion des Réponses :**
+    *   **Succès (`200 OK`) :**
+        *   La réponse contient : `{ "msg": "Merci ! Votre message a bien été envoyé." }`
+        *   **Action :** Affichez ce message. C'est une bonne pratique de **vider les champs du formulaire** après un envoi réussi.
+    *   **Erreur (`400 Bad Request` ou `500 Internal Server Error`) :**
+        *   Affichez un message d'erreur générique comme "Une erreur est survenue. Veuillez réessayer plus tard."
+    *   **Finalement :** Mettez `isLoading` à `false`.
 
 ---
 
-### **Section 4 : 🧑‍💼 Profil de l'Utilisateur**
-*(Toutes ces routes nécessitent une authentification)*
+### **Exemple de Code (Pseudo-code React/Axios pour le Feedback)**
 
-| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
-| :--- | :--- | :--- | :--- |
-| **Voir son profil** | `GET` | `/api/profile/` | Récupère les informations de base de l'utilisateur. |
-| **Modifier son profil** | `PUT` | `/api/profile/` | Met à jour le nom, prénom ou téléphone. |
-| **Changer son mot de passe** | `PUT` | `/api/profile/password` | Modifie le mot de passe après vérification de l'ancien. |
-| **Voir son historique** | `GET` | `/api/profile/orders` | Récupère la liste (résumé) de toutes ses commandes. |
-| **Voir le détail d'une commande**| `GET` | `/api/profile/orders/{id}` | Récupère les détails complets d'une commande (produits, suivi). |
-| **Lister ses adresses** | `GET` | `/api/profile/addresses` | Récupère toutes les adresses de livraison enregistrées. |
-| **Ajouter une adresse** | `POST` | `/api/profile/addresses` | Enregistre une nouvelle adresse. |
-| **Modifier une adresse** | `PUT` | `/api/profile/addresses/{id}`| Met à jour une adresse existante. |
-| **Supprimer une adresse** | `DELETE`| `/api/profile/addresses/{id}`| Supprime une adresse. |
-| **Définir par défaut** | `POST` | `/api/profile/addresses/{id}/set-default`| Marque une adresse comme étant celle par défaut. |
+```javascript
+// Dans votre page de contact
 
----
+import { useState } from 'react';
+import apiClient from '../services/apiClient'; // Votre client Axios centralisé
 
-### **Section 5 : 💳 Processus de Paiement**
-*(Nécessite une authentification)*
+function ContactPage() {
+  const [formData, setFormData] = useState({ prenom: '', nom: '', email: '', message: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const [responseMsg, setResponseMsg] = useState('');
 
-| Rôle | Méthode HTTP | Bonne Route à Appeler | Description |
-| :--- | :--- | :--- | :--- |
-| **Lancer le paiement** | `POST` | `/api/payment/initialize` | Envoie les infos de livraison pour créer la commande et obtenir l'URL FedaPay. |
-| **Vérifier le statut après paiement**| `GET` | `/api/payment/status/{order_id}`| Confirme le paiement après la redirection depuis FedaPay. |
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-Cette liste est la référence définitive pour le développement du frontend. En respectant scrupuleusement ces routes, la communication avec l'API sera fluide et sans erreur.
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.prenom || !formData.nom || !formData.email || !formData.message) {
+      setResponseMsg('Erreur: Veuillez remplir tous les champs.');
+      return;
+    }
+    
+    setIsLoading(true);
+    setResponseMsg('');
+
+    try {
+      const response = await apiClient.post('/api/feedback', formData);
+      setResponseMsg(response.data.msg); // "Merci ! Votre message..."
+      setFormData({ prenom: '', nom: '', email: '', message: '' }); // Vider le formulaire
+    } catch (error) {
+      setResponseMsg('Désolé, une erreur est survenue. Veuillez réessayer.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* ... vos inputs ... */}
+      <button type="submit" disabled={isLoading}>
+        {isLoading ? 'Envoi en cours...' : 'Envoyer le Message'}
+      </button>
+      {responseMsg && <p>{responseMsg}</p>}
+    </form>
+  );
+}
+```
+
+En suivant cette feuille de route, vous pourrez intégrer ces deux fonctionnalités de manière propre et robuste, en offrant un retour clair et immédiat à l'utilisateur.

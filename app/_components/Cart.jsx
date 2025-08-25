@@ -35,14 +35,14 @@ function Cart() {
     }
 
     return (
-        <div className="p-4">
-            <h2 className="text-lg font-bold mb-4">My Cart</h2>
+        <div className="p-4 flex flex-col h-full">
+            <h2 className="text-lg font-bold mb-4 shrink-0">Mon Panier</h2>
             {!cart || cart.length === 0 ? (
-                <p>Your cart is empty.</p>
+                <p>Votre panier est vide.</p>
             ) : (
                 <>
                     {/* ITEM LIST */}
-                    <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2">
+                    <div className="flex-1 space-y-4 overflow-y-auto pr-2">
                         {cart.map((item) => (
                             <div key={item.id} className="flex gap-4 items-center">
                                 <Image 
@@ -65,7 +65,7 @@ function Cart() {
                     </div>
 
                     {/* SUBTOTAL & CHECKOUT BUTTON */}
-                    <div className="mt-6 border-t pt-4">
+                    <div className="mt-6 border-t pt-4 shrink-0">
                         <div className="flex justify-between items-center font-bold text-lg mb-4">
                             <span>Total</span>
                             <span>{calculateCartSubtotal()} FCFA</span>

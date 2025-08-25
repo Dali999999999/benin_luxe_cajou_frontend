@@ -47,13 +47,13 @@ const login = (credentials) => {
     return apiClient.post('/auth/login', credentials).then(resp => resp.data);
 };
 
-const verifyAccount = (email, code) => {
-    const payload = { email, code, session_id: getSessionId() };
+const verifyAccount = (token, code) => {
+    const payload = { token, code, session_id: getSessionId() };
     return apiClient.post('/auth/verify-account', payload).then(resp => resp.data);
 };
 
-const resendVerificationCode = (email) => {
-    return apiClient.post('/auth/resend-verification', { email }).then(resp => resp.data);
+const resendVerificationCode = (token) => {
+    return apiClient.post('/auth/resend-verification', { token }).then(resp => resp.data);
 };
 
 const forgotPassword = (email) => {
@@ -110,6 +110,13 @@ const initializePayment = (data) => apiClient.post('/api/payment/initialize', da
 const getPaymentStatus = (orderId) => apiClient.get(`/api/payment/status/${orderId}`).then(resp => resp.data);
 
 
+// =========== Section 6 : 📢 Actions Publiques (Newsletter, Feedback) ===========
+
+const subscribeToNewsletter = (email) => apiClient.post('/api/newsletter/subscribe', { email }).then(resp => resp.data);
+
+const sendFeedback = (feedbackData) => apiClient.post('/api/feedback', feedbackData).then(resp => resp.data);
+
+
 // On exporte toutes les fonctions pour qu'elles soient utilisables dans l'application.
 export default {
     getCategories,
@@ -141,4 +148,7 @@ export default {
     updateAddress,
     deleteAddress,
     setDefaultAddress,
+    // Nouvelles fonctions publiques
+    subscribeToNewsletter,
+    sendFeedback,
 };

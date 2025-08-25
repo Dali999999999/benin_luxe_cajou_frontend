@@ -1,8 +1,13 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { FaWhatsapp } from 'react-icons/fa';
+import { toast } from "sonner";
+import GlobalApi from "../_utils/GlobalApi";
+import { LoaderCircle } from "lucide-react";
 
 // Icônes pour les réseaux sociaux
 const FacebookIcon = (props) => (
@@ -75,6 +80,31 @@ const TikTokIcon = (props) => (
 );
 
 function Footer() {
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleNewsletterSubmit = async (event) => {
+    event.preventDefault();
+    if (!email) {
+      toast.error("Veuillez saisir une adresse e-mail.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await GlobalApi.subscribeToNewsletter(email);
+      toast.success(response.msg);
+      setEmail('');
+    } catch (error) {
+      if (error.response?.status === 409) {
+        toast.warning(error.response.data.msg);
+      } else {
+        toast.error("Une erreur est survenue. Veuillez réessayer.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <footer className="relative text-white mt-16 border-t-4 border-primary overflow-hidden">
       <div className="absolute inset-0 bg-primary"></div>
@@ -88,17 +118,21 @@ function Footer() {
               Recevez nos actualités et offres spéciales.
             </p>
           </div>
-          <form className="flex w-full max-w-sm gap-2">
+          <form className="flex w-full max-w-sm gap-2" onSubmit={handleNewsletterSubmit}>
             <Input
               type="email"
               placeholder="Votre adresse e-mail"
               className="bg-white/10 border border-white/30 text-white placeholder-gray-200 focus:ring-2 focus:ring-white/80"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
             />
             <Button
               type="submit"
               className="bg-white text-primary hover:bg-gray-200 transition-colors font-bold"
+              disabled={loading}
             >
-              S'inscrire
+              {loading ? <LoaderCircle className="animate-spin" /> : "S'inscrire"}
             </Button>
           </form>
         </div>
@@ -107,7 +141,7 @@ function Footer() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-10">
           <div>
-            <h3 className="font-bold text-lg mb-4 text-white">Informations</h3>
+            <h3 className="font-serif font-bold text-lg mb-4 text-white">Informations</h3>
             <ul className="space-y-3">
               <li>
                 <Link
@@ -137,7 +171,7 @@ function Footer() {
           </div>
 
           <div>
-            <h3 className="font-bold text-lg mb-4 text-white">Support</h3>
+            <h3 className="font-serif font-bold text-lg mb-4 text-white">Support</h3>
             <ul className="space-y-3">
               <li>
                 <Link
@@ -167,7 +201,7 @@ function Footer() {
           </div>
 
           <div>
-            <h3 className="font-bold text-lg mb-4 text-white">Produits</h3>
+            <h3 className="font-serif font-bold text-lg mb-4 text-white">Produits</h3>
             <ul className="space-y-3">
               <li>
                 <Link
@@ -225,7 +259,7 @@ function Footer() {
               rel="noopener noreferrer"
               className="text-white/80 hover:text-white transition-transform hover:scale-110"
             >
-              <WhatsAppIcon />
+               <FaWhatsapp className="text-2xl"/>
             </Link>
           </div>
         </div>

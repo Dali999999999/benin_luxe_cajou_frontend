@@ -111,13 +111,13 @@ function renderSectionContent(id) {
     const content = {
         objet: "Les présentes CGV visent à définir les modalités de vente entre le Vendeur et le Client, de la commande aux services, en passant par le paiement et la livraison.",
         produits: "Les produits proposés à la vente sont ceux qui figurent sur le Site, dans la limite des stocks disponibles. Nous apportons le plus grand soin dans la présentation et la description des produits. Les photographies ne sont pas contractuelles.",
-        prix: "Les prix sont indiqués en [Votre Devise, ex: XOF] toutes taxes comprises (TTC), hors frais de livraison. Le Vendeur se réserve le droit de modifier ses prix à tout moment, mais le produit sera facturé sur la base du tarif en vigueur au moment de la validation de la commande.",
+        prix: "Les prix sont indiqués en XOF toutes taxes comprises (TTC), hors frais de livraison. Le Vendeur se réserve le droit de modifier ses prix à tout moment, mais le produit sera facturé sur la base du tarif en vigueur au moment de la validation de la commande.",
         commande: "Le Client peut passer commande sur le Site 24h/24 et 7j/7. Le processus de commande se compose de plusieurs étapes successives. Une fois sa sélection de produits effectuée, et son panier validé, le Client devra s'identifier, choisir l'adresse de livraison, et enfin valider le mode de paiement.",
-        paiement: "Le paiement est exigible immédiatement à la commande. Le Client peut effectuer le règlement par [Lister vos moyens de paiement]. Les paiements sont sécurisés par notre prestataire [Nom du prestataire de paiement] via un protocole de cryptage.",
+        paiement: "Le paiement est exigible immédiatement à la commande. Le Client peut effectuer le règlement par MTN MoMo, Moov Money ou par carte bancaire. Les paiements sont sécurisés par notre prestataire Fedapay via un protocole de cryptage.",
         livraison: "Les produits sont livrés à l'adresse de livraison indiquée au cours du processus de commande, dans les délais indiqués. Ces délais ne sont donnés qu'à titre indicatif.",
         retractation: "Conformément à la législation en vigueur, le Client dispose d'un délai de [ex: 14 jours] à compter de la réception de ses produits pour exercer son droit de rétractation sans avoir à justifier de motifs ni à payer de pénalité. Les produits doivent être retournés dans leur état d'origine.",
         responsabilite: "Le Vendeur, dans le processus de vente en ligne, n'est tenu que par une obligation de moyens. Sa responsabilité ne pourra être engagée pour un dommage résultant de l'utilisation du réseau Internet (virus, rupture de service, etc.).",
-        droit: "Les présentes CGV sont soumises à la loi [Votre Pays, ex: béninoise]. En cas de litige, les tribunaux de [Votre Ville, ex: Cotonou] seront seuls compétents.",
+        droit: "Les présentes CGV sont soumises à la loi béninoise. En cas de litige, les tribunaux de Cotonou seront seuls compétents.",
     };
     return <p>{content[id]}</p>;
 }

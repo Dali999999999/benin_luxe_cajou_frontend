@@ -92,15 +92,15 @@ function HomeClient({ catalogueStructure, initialProducts, sliderList }) {
             layout="fill"
             objectFit="cover"
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-start p-8 md:p-16">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight drop-shadow-lg">
+          <div className="absolute inset-0 flex flex-col justify-center items-start p-6 sm:p-8 md:p-12 lg:p-16">
+            <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight drop-shadow-lg">
               Livraison rapide
               <br />
               <span className="text-[#953329]">partout au Bénin !</span>
             </h2>
             <a
               href="#liste-produits"
-              className="mt-6 px-8 py-3 bg-white text-green-700 font-bold rounded-full text-lg shadow-lg transition-transform hover:scale-105"
+              className="mt-4 md:mt-6 px-4 py-2 md:px-8 md:py-3 bg-white text-green-700 font-bold rounded-full text-sm md:text-lg shadow-lg transition-transform hover:scale-105"
             >
               Commander maintenant
             </a>

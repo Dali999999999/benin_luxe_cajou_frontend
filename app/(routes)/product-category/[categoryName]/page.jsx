@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 function ProductCategory({ params }) {
   const { searchQuery } = useContext(SearchContext);
   const [allProducts, setAllProducts] = useState([]);
-  const [displayedProducts, setDisplayedProducts] = useState([]);
+  const [displayedProducts, setDisplayedProducts] = useState(null);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -64,10 +64,6 @@ function ProductCategory({ params }) {
     }
     setDisplayedProducts(filtered);
   }, [allProducts, params.categoryName, categories, searchQuery, typeToCategoryMap]);
-
-  if (loading) {
-    return <div className="p-10 text-center">Loading products...</div>;
-  }
 
   return (
     <div>

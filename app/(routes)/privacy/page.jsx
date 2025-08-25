@@ -99,7 +99,7 @@ function PrivacyPage() {
 function renderSectionContent(id) {
     switch (id) {
         case 'introduction':
-            return <p>La présente Politique de Confidentialité décrit comment Bénin Luxe Cajou collecte, utilise et partage vos informations personnelles lorsque vous visitez ou effectuez un achat sur notre site web [Votre Nom de Domaine].</p>;
+            return <p>La présente Politique de Confidentialité décrit comment Bénin Luxe Cajou collecte, utilise et partage vos informations personnelles lorsque vous visitez ou effectuez un achat sur notre site Bénin Luxe Cajou</p>;
         case 'collecte':
             return <>
                 <p>Nous collectons plusieurs types d'informations :</p>
@@ -111,7 +111,7 @@ function renderSectionContent(id) {
         case 'utilisation':
             return <p>Nous utilisons les informations que nous collectons pour traiter vos commandes, communiquer avec vous, optimiser notre site, et (si vous y consentez) vous envoyer des informations sur nos produits et promotions.</p>;
         case 'partage':
-            return <p>Nous partageons vos informations personnelles avec des tiers pour nous aider à utiliser vos informations, comme décrit ci-dessus. Par exemple, nous utilisons [Nom de votre plateforme e-commerce, ex: Shopify] pour alimenter notre boutique en ligne et [Nom de votre prestataire de paiement, ex: Stripe] pour traiter les paiements.</p>;
+            return <p>Nous partageons vos informations personnelles avec des tiers pour nous aider à utiliser vos informations, comme décrit ci-dessus. Par exemple, nous utilisons Fedapay pour traiter les paiements.</p>;
         case 'cookies':
             return <p>Nous utilisons des cookies pour améliorer votre expérience de navigation. Les cookies sont des fichiers de données qui sont placés sur votre appareil et incluent souvent un identifiant unique anonyme. Vous pouvez configurer votre navigateur pour refuser les cookies, mais certaines parties de notre site pourraient ne pas fonctionner correctement.</p>;
         case 'securite':
