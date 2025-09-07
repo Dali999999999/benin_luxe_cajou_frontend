@@ -1,8 +1,15 @@
-"use client";
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import Header from "./_components/Header";
+import Footer from "./_components/Footer"; 
+import CookieBanner from "./_components/CookieBanner";
+import SEOSchema from "./_components/SEOSchema";
+import Providers from "./_components/Providers";
+import { Toaster } from "@/components/ui/sonner";
 
-// Metadata SEO (même en client component, c'est mieux que rien)
+const outfit = Outfit({ subsets: ["latin"] });
+
+// Metadata SEO - maintenant que c'est un server component
 export const metadata = {
   title: "Benin Luxe Cajou - Noix de Cajou Premium du Bénin",
   description: "Découvrez nos noix de cajou premium directement du Bénin. Qualité exceptionnelle, livraison rapide. Commandez en ligne vos cajous bio et artisanaux.",
@@ -18,36 +25,19 @@ export const metadata = {
     locale: "fr_FR"
   }
 };
-import Header from "./_components/Header";
-import Footer from "./_components/Footer"; 
-import CookieBanner from "./_components/CookieBanner";
-import SEOSchema from "./_components/SEOSchema";
-import { Toaster } from "@/components/ui/sonner";
-import { CartProvider } from "./_context/CartContext";
-import { CategoryProvider } from "./_context/CategoryContext";
-import { AuthProvider } from "./_context/AuthContext";
-import { SearchProvider } from "./_context/SearchContext";
-
-const outfit = Outfit({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body className={outfit.className}>
         <SEOSchema />
-        <SearchProvider>
-          <AuthProvider>
-            <CartProvider>
-              <CategoryProvider>
-                <Header />
-                <main>{children}</main>
-                <Footer />
-                <CookieBanner />
-                <Toaster />
-              </CategoryProvider>
-            </CartProvider>
-          </AuthProvider>
-        </SearchProvider>
+        <Providers>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <CookieBanner />
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );
