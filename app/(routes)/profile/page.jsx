@@ -52,7 +52,9 @@ function Profile() {
             });
 
             const ordersPromise = GlobalApi.getOrders().then(resp => {
-                setOrders(resp);
+                // Filtrer les commandes pour masquer celles en attente (paiement non confirmé)
+                const confirmedOrders = resp.filter(order => order.statut !== 'en_attente');
+                setOrders(confirmedOrders);
             }).catch(error => {
                 toast.error('Erreur lors de la récupération des commandes.');
                 console.error(error);
