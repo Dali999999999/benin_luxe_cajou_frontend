@@ -1,12 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
 import apiClient from './apiClient'; // On importe notre nouveau client API centralisé
+import { authCookies } from './cookieManager'; // Gestion des cookies
 
 // --- Gestion de la session pour les invités ---
 const getSessionId = () => {
-    let sessionId = localStorage.getItem('session_id');
+    let sessionId = authCookies.getSessionId();
     if (!sessionId) {
         sessionId = uuidv4();
-        localStorage.setItem('session_id', sessionId);
+        authCookies.setSessionId(sessionId);
     }
     return sessionId;
 };
@@ -70,7 +71,7 @@ const resetPassword = (email, code, new_password) => {
 // Route unique qui gère tout, avec un slash final très important
 
 const manageCart = (data) => {
-    const token = localStorage.getItem('access_token');
+    const token = authCookies.getAccessToken();
     let body = { ...data };
 
     if (!token) {

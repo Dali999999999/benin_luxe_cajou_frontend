@@ -3,6 +3,7 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import Header from "./_components/Header";
 import Footer from "./_components/Footer"; 
+import CookieBanner from "./_components/CookieBanner";
 import { Toaster } from "@/components/ui/sonner";
 import { CartProvider } from "./_context/CartContext";
 import { CategoryProvider } from "./_context/CategoryContext";
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
                 <Header />
                 <main>{children}</main>
                 <Footer />
+                <CookieBanner />
                 <Toaster />
               </CategoryProvider>
             </CartProvider>

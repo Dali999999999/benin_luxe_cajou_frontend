@@ -11,6 +11,7 @@ import Image from 'next/image'
 import ProfileInfoSkeleton from '@/app/_components/ProfileInfoSkeleton';
 import OrderListSkeleton from '@/app/_components/OrderListSkeleton';
 import OrderDetailSkeleton from '@/app/_components/OrderDetailSkeleton';
+import { authCookies } from '@/app/_utils/cookieManager';
 
 function Profile() {
     const { isLogin, updateAuthStatus } = useContext(AuthContext);
@@ -116,7 +117,7 @@ function Profile() {
     
 
     const onSignOut = () => {
-        localStorage.clear();
+        authCookies.clearAll();
         updateAuthStatus(false); // Update auth status
         router.push('/');
     }

@@ -22,6 +22,7 @@ import { AuthContext } from '@/app/_context/AuthContext';
 import { toast } from 'sonner';
 // GlobalApi n'est plus nécessaire pour le login, mais peut l'être pour d'autres fonctions
 import GlobalApi from '@/app/_utils/GlobalApi';
+import { authCookies } from '@/app/_utils/cookieManager';
 
 function SignIn() {
 
@@ -42,7 +43,7 @@ function SignIn() {
 
     // On vérifie le nouveau token
     useEffect(() => {
-        const accessToken = localStorage.getItem('access_token');
+        const accessToken = authCookies.getAccessToken();
         if (accessToken) {
             router.push("/")
         }

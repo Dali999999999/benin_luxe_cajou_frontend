@@ -8,6 +8,7 @@ import GlobalApi from '@/app/_utils/GlobalApi'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 import { LoaderIcon } from 'lucide-react'
+import { removeCookie } from '@/app/_utils/cookieManager'
 
 function VerifyAccount() {
 
@@ -42,8 +43,8 @@ function VerifyAccount() {
                 access_token: resp.access_token,
                 refresh_token: resp.refresh_token
             };
-            updateAuthStatus(true, tokens); // Met à jour le contexte et le localStorage
-            localStorage.removeItem('session_id'); // Nettoie l'ID de session invité
+            updateAuthStatus(true, tokens); // Met à jour le contexte et les cookies
+            removeCookie('session_id'); // Nettoie l'ID de session invité
             sessionStorage.removeItem('verification_email'); // Clean up email from sessionStorage
 
             toast("Compte vérifié avec succès !")

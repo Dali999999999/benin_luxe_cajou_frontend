@@ -25,6 +25,7 @@ import Cart from './Cart';
 import { CartContext } from '../_context/CartContext';
 import { CategoryContext } from '../_context/CategoryContext';
 import { AuthContext } from '../_context/AuthContext';
+import { authCookies } from '../_utils/cookieManager';
 
 function Header() {
     const [catalogueStructure, setCatalogueStructure] = useState([]);
@@ -54,7 +55,7 @@ function Header() {
     };
 
     const OnSignOut = () => {
-        localStorage.clear();
+        authCookies.clearAll();
         updateAuthStatus(false);
         router.push("/sign-in");
     };

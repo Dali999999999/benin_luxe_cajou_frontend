@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export default function ShippingPage() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 py-16 px-6">
@@ -29,7 +31,7 @@ export default function ShippingPage() {
           <ul className="list-disc pl-6 space-y-2 text-lg">
             <li><span className="font-semibold">Bénin :</span> 2 à 3 jours ouvrables.</li>
             <li><span className="font-semibold">Afrique de l’Ouest :</span> 5 à 7 jours ouvrables.</li>
-            <li><span className="font-semibold">International :</span> 7 à 15 jours ouvrables selon la destination.</li>
+            <li><span className="font-semibold">International :</span> 15 à 30 jours ouvrables selon la destination.</li>
           </ul>
         </section>
 
@@ -58,22 +60,14 @@ export default function ShippingPage() {
           </p>
         </section>
 
-        {/* Contact */}
-        <section className="bg-green-50 p-6 rounded-xl shadow-md">
-          <h2 className="text-2xl font-bold text-green-700 mb-4">
-            Besoin d’aide ?
-          </h2>
-          <p className="text-lg leading-relaxed">
-            Si vous avez des questions concernant la livraison, contactez notre
-            service client à l’adresse suivante :{" "}
-            <a
-              href="mailto:support@beninluxecajou.com"
-              className="text-green-700 font-semibold underline"
-            >
-              support@beninluxecajou.com
-            </a>{" "}
-            ou appelez-nous au <span className="font-semibold">+229 90 00 00 00</span>.
-          </p>
+        {/* Lien vers la page contact */}
+        <section className="text-center">
+          <Link
+            href="/contact"
+            className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition"
+          >
+            Nous Contacter
+          </Link>
         </section>
       </div>
     </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import React, { createContext, useState, useEffect } from 'react';
+import { authCookies } from '../_utils/cookieManager';
 
 export const AuthContext = createContext();
 
@@ -11,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
     // Au chargement, on vérifie si un token existe pour définir l'état initial.
     useEffect(() => {
-        const accessToken = localStorage.getItem('access_token');
+        const accessToken = authCookies.getAccessToken();
         if (accessToken) {
             setIsLogin(true);
         }
@@ -25,12 +26,10 @@ export const AuthProvider = ({ children }) => {
     const updateAuthStatus = (loggedIn, tokens) => {
         setIsLogin(loggedIn);
         if (loggedIn && tokens) {
-            localStorage.setItem('access_token', tokens.access_token);
-            localStorage.setItem('refresh_token', tokens.refresh_token);
+            authCookies.setTokens(tokens.access_token, tokens.refresh_token);
         } else {
             // Si déconnecté, on nettoie tout.
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('refresh_token');
+            authCookies.clearAll();
         }
     };
 
