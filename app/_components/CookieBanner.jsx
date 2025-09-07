@@ -46,12 +46,12 @@ const CookieBanner = () => {
         transition={{ duration: 0.4, ease: "easeOut" }}
         className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-black/20 backdrop-blur-sm"
       >
-        <Card className="mx-auto max-w-4xl bg-white/95 backdrop-blur border-orange-200 shadow-2xl">
+        <Card className="mx-auto max-w-4xl bg-white/95 backdrop-blur border-green-200 shadow-2xl">
           <CardContent className="p-6">
             <div className="flex items-start gap-4">
               {/* Icône Cookie */}
-              <div className="flex-shrink-0 p-2 bg-orange-100 rounded-full">
-                <Cookie className="w-6 h-6 text-orange-600" />
+              <div className="flex-shrink-0 p-2 bg-green-100 rounded-full">
+                <Cookie className="w-6 h-6 text-green-600" />
               </div>
 
               <div className="flex-1">
@@ -117,7 +117,7 @@ const CookieBanner = () => {
                 <div className="flex flex-wrap items-center gap-3">
                   <Button 
                     onClick={acceptCookies}
-                    className="bg-orange-600 hover:bg-orange-700 text-white px-6"
+                    className="bg-green-600 hover:bg-green-700 text-white px-6"
                   >
                     Accepter tous les cookies
                   </Button>
@@ -143,7 +143,7 @@ const CookieBanner = () => {
                 <p className="text-xs text-gray-500 mt-3">
                   En continuant à naviguer, vous acceptez notre utilisation des cookies. 
                   Consultez notre{' '}
-                  <a href="/privacy" className="text-orange-600 hover:underline">
+                  <a href="/privacy" className="text-green-600 hover:underline">
                     politique de confidentialité
                   </a>{' '}
                   pour plus d'informations.
