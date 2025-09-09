@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { authCookies } from './cookieManager';
 
-const API_BASE_URL = 'http://69.62.106.46/api';
+const API_BASE_URL = 'http://69.62.106.46';
 
 // 1. Création de l'instance Axios
 const apiClient = axios.create({

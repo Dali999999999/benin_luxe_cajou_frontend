@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://69.62.106.46/api';
+const API_BASE_URL = 'http://69.62.106.46';
 
 export async function POST(request) {
     const token = request.headers.get('Authorization');
@@ -17,7 +17,7 @@ export async function POST(request) {
     }
 
     try {
-        const response = await axios.post(`${API_BASE_URL}/payment/initialize`, payload, {
+        const response = await axios.post(`${API_BASE_URL}/api/payment/initialize`, payload, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': token

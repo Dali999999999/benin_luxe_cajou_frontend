@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://69.62.106.46/api';
+const API_BASE_URL = 'http://69.62.106.46';
 
 export async function GET(request) {
     try {
-        const response = await axios.get(`${API_BASE_URL}/catalogue-structure`);
+        const response = await axios.get(`${API_BASE_URL}/api/catalogue-structure`);
         return NextResponse.json(response.data, { status: response.status });
     } catch (error) {
         const status = error.response ? error.response.status : 500;
