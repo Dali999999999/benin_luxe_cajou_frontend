@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
-const API_BASE_URL = 'https://benin-luxe-cajou-api.onrender.com';
+const API_BASE_URL = 'http://69.62.106.46/api';
 
 async function handler(request, { params }) {
     // The slug can be a single value (e.g., 'orders') or undefined for the base '/api/profile/' route.
     const slug = params.slug ? params.slug.join('/') : '';
-    const url = `${API_BASE_URL}/api/profile/${slug}`;
+    const url = `${API_BASE_URL}/profile/${slug}`;
 
     const token = request.headers.get('Authorization');
 

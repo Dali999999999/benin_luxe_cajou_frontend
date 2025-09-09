@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
-const API_BASE_URL = 'https://benin-luxe-cajou-api.onrender.com';
+const API_BASE_URL = 'http://69.62.106.46/api';
 
 export async function GET(request, { params }) {
     const orderId = params.order_id;
@@ -12,7 +12,7 @@ export async function GET(request, { params }) {
     }
 
     try {
-        const response = await axios.get(`${API_BASE_URL}/api/payment/status/${orderId}`, {
+        const response = await axios.get(`${API_BASE_URL}/payment/status/${orderId}`, {
             headers: {
                 'Authorization': token
             }

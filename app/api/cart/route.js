@@ -22,7 +22,7 @@ export async function POST(request) {
     const bodyToSend = Object.keys(payload).length === 0 ? null : JSON.stringify(payload);
 
     try {
-        const apiResponse = await fetch('https://benin-luxe-cajou-api.onrender.com/api/cart/', {
+        const apiResponse = await fetch('http://69.62.106.46/api/cart/', {
             method: 'POST',
             headers: headers,
             body: bodyToSend,

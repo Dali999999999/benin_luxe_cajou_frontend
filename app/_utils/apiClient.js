@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { authCookies } from './cookieManager';
 
+const API_BASE_URL = 'http://69.62.106.46/api';
+
 // 1. Création de l'instance Axios
 const apiClient = axios.create({
-  baseURL: 'https://benin-luxe-cajou-api.onrender.com', // On retire /api de l'URL de base
+  baseURL: API_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
   withCredentials: true, // Important pour envoyer les cookies
 });
@@ -44,7 +46,7 @@ apiClient.interceptors.response.use(
 
         // Appel à l'API pour obtenir un nouveau token d'accès
         const response = await axios.post(
-          'https://benin-luxe-cajou-api.onrender.com/auth/refresh', // Endpoint de refresh
+          `${API_BASE_URL}/auth/refresh`, // Endpoint de refresh
           {},
           { 
             headers: { Authorization: `Bearer ${refreshToken}` },
