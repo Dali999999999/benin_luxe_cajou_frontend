@@ -44,34 +44,35 @@ const CookieBanner = () => {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 100, opacity: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-black/20 backdrop-blur-sm"
+        className="fixed bottom-0 left-0 right-0 z-50 p-2 sm:p-4 bg-black/20 backdrop-blur-sm"
       >
         <Card className="mx-auto max-w-4xl bg-white/95 backdrop-blur border-green-200 shadow-2xl">
-          <CardContent className="p-6">
-            <div className="flex items-start gap-4">
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex items-start gap-2 sm:gap-4">
               {/* Icône Cookie */}
               <div className="flex-shrink-0 p-2 bg-green-100 rounded-full">
-                <Cookie className="w-6 h-6 text-green-600" />
+                <Cookie className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
               </div>
 
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 {/* En-tête */}
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                    🍪 Nous utilisons des cookies
+                <div className="flex items-start justify-between mb-3 gap-2">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 flex items-center gap-1 sm:gap-2 min-w-0">
+                    <span className="hidden xs:inline">🍪</span>
+                    <span className="truncate">Nous utilisons des cookies</span>
                   </h3>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsVisible(false)}
-                    className="text-gray-500 hover:text-gray-700"
+                    className="text-gray-500 hover:text-gray-700 flex-shrink-0 p-1 sm:p-2"
                   >
                     <X className="w-4 h-4" />
                   </Button>
                 </div>
 
                 {/* Message principal */}
-                <p className="text-gray-700 mb-4 leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-700 mb-4 leading-relaxed">
                   Nous utilisons des cookies pour améliorer votre expérience sur <strong>Benin Luxe Cajou</strong>. 
                   Ces cookies nous permettent de mémoriser vos préférences, sécuriser votre connexion et analyser l'utilisation de notre site.
                 </p>
@@ -86,7 +87,7 @@ const CookieBanner = () => {
                       transition={{ duration: 0.3 }}
                       className="mb-4 p-4 bg-gray-50 rounded-lg overflow-hidden"
                     >
-                      <div className="grid md:grid-cols-2 gap-4 text-sm">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                         <div className="space-y-2">
                           <h4 className="font-medium text-gray-900 flex items-center gap-2">
                             <Shield className="w-4 h-4 text-green-600" />
@@ -114,28 +115,30 @@ const CookieBanner = () => {
                 </AnimatePresence>
 
                 {/* Boutons d'action */}
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 sm:gap-3">
                   <Button 
                     onClick={acceptCookies}
-                    className="bg-green-600 hover:bg-green-700 text-white px-6"
+                    className="bg-green-600 hover:bg-green-700 text-white px-4 sm:px-6 text-sm sm:text-base"
                   >
-                    Accepter tous les cookies
+                    <span className="sm:hidden">Accepter tous</span>
+                    <span className="hidden sm:inline">Accepter tous les cookies</span>
                   </Button>
                   
                   <Button 
                     variant="outline" 
                     onClick={acceptOnlyNecessary}
-                    className="border-gray-300"
+                    className="border-gray-300 px-4 sm:px-6 text-sm sm:text-base"
                   >
-                    Cookies nécessaires uniquement
+                    <span className="sm:hidden">Nécessaires seulement</span>
+                    <span className="hidden sm:inline">Cookies nécessaires uniquement</span>
                   </Button>
                   
                   <Button 
                     variant="ghost" 
                     onClick={() => setShowDetails(!showDetails)}
-                    className="text-gray-600 hover:text-gray-800"
+                    className="text-gray-600 hover:text-gray-800 px-4 sm:px-6 text-sm sm:text-base"
                   >
-                    {showDetails ? 'Masquer les détails' : 'Plus d\'infos'}
+                    {showDetails ? 'Masquer' : 'Plus d\'infos'}
                   </Button>
                 </div>
 
