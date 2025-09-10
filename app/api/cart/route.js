@@ -22,7 +22,8 @@ export async function POST(request) {
     const bodyToSend = Object.keys(payload).length === 0 ? null : JSON.stringify(payload);
 
     try {
-        const apiResponse = await fetch('http://69.62.106.46/api/cart/', {
+        const API_BASE_URL = process.env.API_URL_INTERNAL || 'http://127.0.0.1:5000';
+        const apiResponse = await fetch(`${API_BASE_URL}/api/cart/`, {
             method: 'POST',
             headers: headers,
             body: bodyToSend,

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://69.62.106.46';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://dzbeninluxecajou.com';
 
 const externalApiClient = axios.create({
   baseURL: API_BASE_URL,

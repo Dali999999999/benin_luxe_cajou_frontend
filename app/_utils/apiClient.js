@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { authCookies } from './cookieManager';
 
-const API_BASE_URL = 'http://69.62.106.46';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://127.0.0.1:5000');
 
 // 1. Création de l'instance Axios
 const apiClient = axios.create({
@@ -31,7 +31,7 @@ apiClient.interceptors.response.use(
     const originalRequest = error.config;
 
     // On vérifie si l'erreur est une 401 et qu'on n'a pas déjà réessayé
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true; // On marque la requête pour éviter les boucles
 
       try {
@@ -45,8 +45,9 @@ apiClient.interceptors.response.use(
         }
 
         // Appel à l'API pour obtenir un nouveau token d'accès
+        const refreshUrl = typeof window !== 'undefined' ? `${API_BASE_URL}/auth/refresh` : 'http://127.0.0.1:5000/auth/refresh';
         const response = await axios.post(
-          `${API_BASE_URL}/auth/refresh`, // Endpoint de refresh
+          refreshUrl, // Endpoint de refresh
           {},
           { 
             headers: { Authorization: `Bearer ${refreshToken}` },

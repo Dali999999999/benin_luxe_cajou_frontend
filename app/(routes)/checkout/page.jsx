@@ -128,11 +128,18 @@ function Checkout() {
             return;
         }
 
+        // DEBUG: Vérifier les tokens avant d'envoyer la requête
+        const accessToken = document.cookie.split('; ').find(row => row.startsWith('access_token='));
+        const refreshToken = document.cookie.split('; ').find(row => row.startsWith('refresh_token='));
+        console.log('DEBUG - Access token présent:', !!accessToken, accessToken?.substring(0, 30));
+        console.log('DEBUG - Refresh token présent:', !!refreshToken, refreshToken?.substring(0, 30));
+
         setIsPlacingOrder(true);
         GlobalApi.initializePayment(formData).then(resp => {
             toast.success("Paiement initié !");
             window.location.href = resp.payment_url;
         }).catch(err => {
+            console.error('DEBUG - Erreur paiement:', err?.response?.status, err?.response?.data);
             toast.error(err?.response?.data?.msg || "Échec de l'initialisation du paiement.");
         }).finally(() => {
             setIsPlacingOrder(false);

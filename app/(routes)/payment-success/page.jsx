@@ -8,9 +8,11 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useContext } from 'react';
 import { AuthContext } from '@/app/_context/AuthContext';
+import { CartContext } from '@/app/_context/CartContext';
 
 function PaymentSuccess() {
     const { isLogin } = useContext(AuthContext);
+    const { getCartData } = useContext(CartContext);
     const router = useRouter();
     const searchParams = useSearchParams();
     const [paymentStatus, setPaymentStatus] = useState('checking'); // checking, paid, pending, failed
@@ -40,13 +42,16 @@ function PaymentSuccess() {
                     setPaymentStatus(resp.payment_status);
                     
                     if (resp.payment_status === 'paye') {
-                        // Clear cart logic can be improved by using context
+                        // Vider le panier après paiement confirmé
                         const cartItems = await GlobalApi.getCart();
                         if (cartItems && cartItems.length > 0) {
-                            for (const item of cartItems) {
-                                await GlobalApi.removeFromCart(item.produit.id);
-                            }
+                            // Attendre que tous les articles soient supprimés
+                            await Promise.all(
+                                cartItems.map(item => GlobalApi.removeFromCart(item.produit.id))
+                            );
                         }
+                        // Toujours rafraîchir le contexte du panier pour mettre à jour l'interface
+                        getCartData();
                     }
 
                 } catch (error) {

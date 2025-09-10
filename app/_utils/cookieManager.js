@@ -11,7 +11,7 @@ export const setCookie = (name, value, options = {}) => {
   const {
     expires = 7, // Expire dans 7 jours par défaut
     path = '/',
-    secure = process.env.NODE_ENV === 'production', // Secure en production uniquement
+    secure = false, // Disabled for development and HTTP sites
     sameSite = 'lax' // Protection CSRF
   } = options;
 

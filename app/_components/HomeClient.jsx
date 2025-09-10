@@ -1,20 +1,42 @@
 "use client";
 
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React, { useState, useEffect, useContext, useMemo, useCallback } from "react";
 import Slider from "./Slider";
 import CategoryList from "./CategoryList";
 import ProductList from "./ProductList";
 import Image from "next/image";
 import { CategoryContext } from "../_context/CategoryContext";
 import { SearchContext } from "../_context/SearchContext";
+import { CartContext } from "../_context/CartContext";
+import GlobalApi from "../_utils/GlobalApi";
 
 // Les imports pour le Carousel et Autoplay ne sont plus nécessaires et ont été supprimés.
 
 function HomeClient({ catalogueStructure, initialProducts, sliderList }) {
-  // --- Votre logique de filtrage (INCHANGÉE) ---
+  // --- Votre logique de filtrage (MISE À JOUR) ---
+  const [currentProducts, setCurrentProducts] = useState(initialProducts);
   const [displayedProducts, setDisplayedProducts] = useState(initialProducts);
   const { selectedCategory } = useContext(CategoryContext);
   const { searchQuery } = useContext(SearchContext);
+  const { cartData } = useContext(CartContext);
+
+  // Fonction pour recharger les produits
+  const refreshProducts = useCallback(async () => {
+    try {
+      const fetchedProducts = await GlobalApi.getProducts();
+      setCurrentProducts(fetchedProducts);
+    } catch (error) {
+      console.error("Failed to refresh products:", error);
+    }
+  }, []);
+
+  // Actualiser les produits quand le panier change
+  useEffect(() => {
+    if (cartData && currentProducts.length > 0) {
+      const timeoutId = setTimeout(refreshProducts, 500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [cartData, refreshProducts, currentProducts.length]);
 
   const typeToCategoryMap = useMemo(() => {
     const map = new Map();
@@ -28,15 +50,15 @@ function HomeClient({ catalogueStructure, initialProducts, sliderList }) {
 
   useEffect(() => {
     if (selectedCategory) {
-      const productsForCategory = initialProducts.filter((p) => {
+      const productsForCategory = currentProducts.filter((p) => {
         const categoryId = typeToCategoryMap.get(p.type_produit?.id);
         return categoryId === selectedCategory.id;
       });
       setDisplayedProducts(productsForCategory);
     } else {
-      setDisplayedProducts(initialProducts);
+      setDisplayedProducts(currentProducts);
     }
-  }, [selectedCategory, initialProducts, typeToCategoryMap]);
+  }, [selectedCategory, currentProducts, typeToCategoryMap]);
 
   const applySearchFilter = (products) => {
     if (!searchQuery) {
@@ -51,14 +73,14 @@ function HomeClient({ catalogueStructure, initialProducts, sliderList }) {
   };
 
   const filterByType = (typeId) => {
-    const productsForType = initialProducts.filter(
+    const productsForType = currentProducts.filter(
       (p) => p.type_produit?.id === typeId
     );
     setDisplayedProducts(applySearchFilter(productsForType));
   };
 
   const filterByCategory = (categoryId) => {
-    const productsForCategory = initialProducts.filter((p) => {
+    const productsForCategory = currentProducts.filter((p) => {
       const catId = typeToCategoryMap.get(p.type_produit?.id);
       return catId === categoryId;
     });

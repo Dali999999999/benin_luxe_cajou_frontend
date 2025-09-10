@@ -1,17 +1,31 @@
 "use client"
 import GlobalApi from '@/app/_utils/GlobalApi'
-import React, { useState, useEffect, useContext, useMemo } from 'react'
+import React, { useState, useEffect, useContext, useMemo, useCallback } from 'react'
 import TopCategoryList from './_components/TopCategoryList'
 import ProductList from '@/app/_components/ProductList';
 import { SearchContext } from '@/app/_context/SearchContext';
+import { CartContext } from '@/app/_context/CartContext';
 import { toast } from 'sonner'
 
 function ProductCategory({ params }) {
   const { searchQuery } = useContext(SearchContext);
+  const { cartData } = useContext(CartContext); // Observer les changements du panier
   const [allProducts, setAllProducts] = useState([]);
   const [displayedProducts, setDisplayedProducts] = useState(null);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [lastUpdate, setLastUpdate] = useState(Date.now());
+
+  // Fonction pour recharger les produits
+  const refreshProducts = useCallback(async () => {
+    try {
+      const fetchedProducts = await GlobalApi.getProducts();
+      setAllProducts(fetchedProducts);
+      setLastUpdate(Date.now());
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -31,6 +45,15 @@ function ProductCategory({ params }) {
     };
     fetchAllData();
   }, []);
+
+  // Actualiser les produits quand le panier change (indique une transaction)
+  useEffect(() => {
+    if (cartData && allProducts.length > 0) {
+      // Délai pour laisser le temps au backend de mettre à jour le stock
+      const timeoutId = setTimeout(refreshProducts, 500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [cartData, refreshProducts, allProducts.length]);
 
   const typeToCategoryMap = useMemo(() => {
     const map = new Map();
