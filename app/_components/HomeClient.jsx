@@ -16,6 +16,11 @@ function HomeClient({ catalogueStructure, initialProducts, sliderList }) {
   // --- Votre logique de filtrage (MISE À JOUR) ---
   const [currentProducts, setCurrentProducts] = useState(initialProducts);
   const [displayedProducts, setDisplayedProducts] = useState(initialProducts);
+
+  // Synchroniser currentProducts avec initialProducts quand ils changent
+  useEffect(() => {
+    setCurrentProducts(initialProducts);
+  }, [initialProducts]);
   const { selectedCategory } = useContext(CategoryContext);
   const { searchQuery } = useContext(SearchContext);
   const { cartData } = useContext(CartContext);

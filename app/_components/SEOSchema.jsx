@@ -5,8 +5,8 @@ export default function SEOSchema() {
     "@type": "Organization",
     "name": "Benin Luxe Cajou",
     "description": "Spécialiste en noix de cajou premium du Bénin",
-    "url": "https://benin-luxe-cajou-frontend.vercel.app",
-    "logo": "https://benin-luxe-cajou-frontend.vercel.app/logo.png",
+    "url": "https://dzbeninluxecajou.com",
+    "logo": "https://dzbeninluxecajou.com/logo.png",
     "sameAs": [
       // Ajouter les réseaux sociaux ici si besoin
     ],

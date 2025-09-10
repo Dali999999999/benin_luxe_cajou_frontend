@@ -116,15 +116,7 @@ export default function AboutPage() {
       </section>
 
       {/* Portrait de la fondatrice */}
-      <section className="py-16 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-        <div className="relative h-72 md:h-96 w-full">
-          <Image
-            src="/images/fondatrice.jpg"
-            alt="Fondatrice"
-            fill
-            className="object-cover rounded-xl shadow-lg"
-          />
-        </div>
+      <section className="py-16 px-6 max-w-6xl mx-auto">
         <div>
           <h2 className="text-3xl font-bold text-green-700 mb-4">
             Zoé Alia, l’Âme de DZ

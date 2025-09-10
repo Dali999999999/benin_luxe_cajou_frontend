@@ -2,43 +2,43 @@
 export default function sitemap() {
   return [
     {
-      url: 'https://benin-luxe-cajou-frontend.vercel.app',
+      url: 'https://dzbeninluxecajou.com',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: 'https://benin-luxe-cajou-frontend.vercel.app/about',
+      url: 'https://dzbeninluxecajou.com/about',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: 'https://benin-luxe-cajou-frontend.vercel.app/contact',
+      url: 'https://dzbeninluxecajou.com/contact',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: 'https://benin-luxe-cajou-frontend.vercel.app/shipping',
+      url: 'https://dzbeninluxecajou.com/shipping',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
-      url: 'https://benin-luxe-cajou-frontend.vercel.app/terms',
+      url: 'https://dzbeninluxecajou.com/terms',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
-      url: 'https://benin-luxe-cajou-frontend.vercel.app/privacy',
+      url: 'https://dzbeninluxecajou.com/privacy',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
-      url: 'https://benin-luxe-cajou-frontend.vercel.app/faq',
+      url: 'https://dzbeninluxecajou.com/faq',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,

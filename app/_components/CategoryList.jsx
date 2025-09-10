@@ -68,12 +68,18 @@ function CategoryList({ onFilterByType, onFilterByCategory }) {
                             `}
                         >
                             <div className="relative w-[60px] h-[60px]">
-                                <Image 
-                                    src={type.image_url}
-                                    fill
-                                    alt={type.nom}
-                                    className='object-contain group-hover:scale-110 transition-transform ease-in-out'
-                                />
+                                {type.image_url ? (
+                                    <Image 
+                                        src={type.image_url}
+                                        fill
+                                        alt={type.nom}
+                                        className='object-contain group-hover:scale-110 transition-transform ease-in-out'
+                                    />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center bg-slate-100 rounded-md">
+                                        <span className="text-slate-400 text-xs text-center">Pas d'image</span>
+                                    </div>
+                                )}
                             </div>
                             <span className="text-center text-base font-semibold">{type.nom}</span>
                         </button>

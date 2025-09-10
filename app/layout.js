@@ -19,7 +19,7 @@ export const metadata = {
   openGraph: {
     title: "Benin Luxe Cajou - Noix de Cajou Premium",
     description: "Les meilleures noix de cajou du Bénin livrées chez vous",
-    url: "https://benin-luxe-cajou-frontend.vercel.app",
+    url: "https://dzbeninluxecajou.com",
     siteName: "Benin Luxe Cajou",
     type: "website",
     locale: "fr_FR"

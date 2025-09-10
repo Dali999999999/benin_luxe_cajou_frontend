@@ -47,6 +47,11 @@ function Profile() {
                     setFormData({ nom: resp.nom || '', prenom: resp.prenom || '', telephone: resp.telephone || '' });
                 }
             }).catch(error => {
+                // Si erreur d'authentification, on met à jour le statut et on laisse le useEffect gérer la redirection
+                if (error.response && error.response.status === 401) {
+                    updateAuthStatus(false);
+                    return;
+                }
                 toast.error('Erreur lors de la récupération du profil.');
                 console.error(error);
             });
@@ -56,6 +61,11 @@ function Profile() {
                 const confirmedOrders = resp.filter(order => order.statut !== 'en_attente');
                 setOrders(confirmedOrders);
             }).catch(error => {
+                // Si erreur d'authentification, on met à jour le statut et on laisse le useEffect gérer la redirection
+                if (error.response && error.response.status === 401) {
+                    updateAuthStatus(false);
+                    return;
+                }
                 toast.error('Erreur lors de la récupération des commandes.');
                 console.error(error);
             });

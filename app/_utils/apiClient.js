@@ -40,7 +40,7 @@ apiClient.interceptors.response.use(
           // Si pas de refresh token, on ne peut rien faire, on déconnecte.
           console.error("Refresh token manquant, déconnexion.");
           authCookies.clearAll();
-          window.location.href = '/sign-in';
+          // Laissons les composants gérer leurs propres redirections
           return Promise.reject(error);
         }
 
@@ -68,7 +68,7 @@ apiClient.interceptors.response.use(
         // Si le refresh token est lui-même invalide, on déconnecte.
         console.error("Session expirée, déconnexion requise.");
         authCookies.clearAll();
-        window.location.href = '/sign-in';
+        // Laissons les composants gérer leurs propres redirections
         return Promise.reject(refreshError);
       }
     }

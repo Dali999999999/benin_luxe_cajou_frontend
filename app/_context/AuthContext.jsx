@@ -6,16 +6,14 @@ import { authCookies } from '../_utils/cookieManager';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(null); // null = loading, true/false = état définitif
     // On ne stocke plus le token dans l'état, car le client API s'en occupe.
     // L'état sert juste à savoir si l'utilisateur est considéré comme connecté ou non.
 
     // Au chargement, on vérifie si un token existe pour définir l'état initial.
     useEffect(() => {
         const accessToken = authCookies.getAccessToken();
-        if (accessToken) {
-            setIsLogin(true);
-        }
+        setIsLogin(accessToken ? true : false);
     }, []);
 
     /**

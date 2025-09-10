@@ -14,6 +14,6 @@ export default function robots() {
         '/_next/'
       ],
     },
-    sitemap: 'https://benin-luxe-cajou-frontend.vercel.app/sitemap.xml',
+    sitemap: 'https://dzbeninluxecajou.com/sitemap.xml',
   }
 }
