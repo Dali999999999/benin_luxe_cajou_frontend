@@ -40,14 +40,26 @@ export default function AboutPage() {
         <h2 className="text-3xl font-bold text-center text-green-700 mb-8">
           Notre Histoire
         </h2>
-        <p className="text-lg leading-relaxed text-justify">
-          DZ est née d’une histoire familiale et entrepreneuriale. Depuis 2003,
-          la fondatrice <span className="font-semibold">Zoé Alia</span> et son
-          mari Dominique ont uni leur passion et leur vision pour transformer
-          les richesses du Bénin en produits d’exception. Aujourd’hui, DZ est le
-          symbole d’un savoir-faire béninois reconnu, alliant tradition et
-          innovation.
-        </p>
+        <div className="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <p className="text-lg leading-relaxed text-justify">
+              DZ est née d'une histoire familiale et entrepreneuriale. Depuis 2003,
+              la fondatrice <span className="font-semibold">Zoé Alia</span> et son
+              mari Dominique ont uni leur passion et leur vision pour transformer
+              les richesses du Bénin en produits d'exception. Aujourd'hui, DZ est le
+              symbole d'un savoir-faire béninois reconnu, alliant tradition et
+              innovation.
+            </p>
+          </div>
+          <div className="relative h-64 md:h-80 w-full">
+            <Image
+              src="/images/image.jpeg"
+              alt="Paysage béninois - Terroir des noix de cajou"
+              fill
+              className="object-cover rounded-xl shadow-lg"
+            />
+          </div>
+        </div>
       </section>
 
       {/* Produits */}

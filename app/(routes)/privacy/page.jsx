@@ -121,7 +121,7 @@ function renderSectionContent(id) {
         case 'mises-a-jour':
             return <p>Nous pouvons mettre à jour cette politique de confidentialité de temps à autre afin de refléter, par exemple, des changements dans nos pratiques ou pour d'autres raisons opérationnelles, légales ou réglementaires.</p>;
         case 'contact':
-            return <p>Pour plus d'informations sur nos pratiques de confidentialité, si vous avez des questions, ou si vous souhaitez déposer une plainte, veuillez nous contacter par e-mail à [Votre E-mail de Contact] ou par courrier à l'adresse suivante : [Votre Adresse Postale Complète].</p>;
+            return <p>Pour plus d'informations sur nos pratiques de confidentialité, si vous avez des questions, ou si vous souhaitez déposer une plainte, veuillez nous contacter par e-mail à <a href="mailto:beninluxecajou229@gmail.com" className="text-green-600 hover:text-green-700 underline font-medium">beninluxecajou229@gmail.com</a>.</p>;
         default:
             return null;
     }

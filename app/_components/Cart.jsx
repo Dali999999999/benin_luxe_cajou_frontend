@@ -1,6 +1,7 @@
 "use client"
 import React, { useContext } from 'react';
 import { Button } from '@/components/ui/button';
+import { SheetClose } from '@/components/ui/sheet';
 import { X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -70,9 +71,11 @@ function Cart() {
                             <span>Total</span>
                             <span>{calculateCartSubtotal()} FCFA</span>
                         </div>
-                        <Link href="/checkout" className="block">
-                            <Button className="w-full">Procédez au paiement</Button>
-                        </Link>
+                        <SheetClose asChild>
+                            <Link href="/checkout" className="block">
+                                <Button className="w-full">Procédez au paiement</Button>
+                            </Link>
+                        </SheetClose>
                     </div>
                 </>
             )}
