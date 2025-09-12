@@ -15,12 +15,12 @@ function Cart() {
     const { cart, getCartData } = useContext(CartContext);
 
     const calculateCartSubtotal = () => {
-        if (!cart) return '0.00';
+        if (!cart) return '0';
         let total = 0;
         cart.forEach(item => {
             total += item.quantite * item.produit.prix_unitaire;
         });
-        return total.toFixed(2);
+        return Math.round(total);
     };
 
     // Logique de suppression mise à jour pour utiliser l'API et le contexte
@@ -56,7 +56,7 @@ function Cart() {
                                 <div className="flex-1">
                                     <h3 className="text-sm font-semibold">{item.produit.nom}</h3>
                                     <p className="text-xs text-gray-500">Quantité: {item.quantite}</p>
-                                    <p className="text-sm font-bold">{(item.quantite * item.produit.prix_unitaire).toFixed(2)} FCFA</p>
+                                    <p className="text-sm font-bold">{Math.round(item.quantite * item.produit.prix_unitaire)} FCFA</p>
                                 </div>
                                 <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => removeItemFromCart(item.produit.id)}>
                                     <X className="h-4 w-4" />

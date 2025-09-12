@@ -79,6 +79,7 @@ function ProductItem({ product }) {
 
         <div className="flex-grow flex flex-col items-start text-left mb-4">
           <h2 className='font-semibold text-lg text-slate-800 truncate w-full'>{product.nom}</h2>
+          <p className='text-sm text-gray-600 mt-1'>{product.quantite_contenant}g</p>
           <p className='font-bold text-xl text-green-600 mt-1'>{product.prix_unitaire} FCFA</p>
         </div>
 

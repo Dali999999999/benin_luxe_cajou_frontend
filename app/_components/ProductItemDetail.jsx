@@ -34,7 +34,7 @@ function ProductItemDetail({ product }) {
 
 
     return (
-        <div className='grid grid-cols-1 md:grid-cols-2 p-7 pb-20 md:pb-7 bg-white text-black'>
+        <div className='grid grid-cols-1 md:grid-cols-2 p-4 md:p-7 bg-white text-black'>
             {/* Image */}
             <Carousel
                 opts={{
@@ -59,30 +59,36 @@ function ProductItemDetail({ product }) {
             </Carousel>
 
             {/* Information */}
-            <div className='flex flex-col md:justify-between md:h-full'>
-                {/* Contenu principal qui scrolle */}
-                <div className="md:pb-0 pb-32"> {/* Espace pour la barre d'action mobile */}
+            <div className='flex flex-col space-y-4'>
+                <div>
                     <h2 className='text-2xl font-bold'>{product.nom}</h2>
+                    <p className='text-lg text-gray-600 font-medium mt-2'>{product.quantite_contenant}g</p>
                     <p className='text-sm text-gray-500 mt-2'>{product.description}</p>
                     <div className='flex gap-3 my-4'>
                         <h2 className='font-bold text-3xl'>{product.prix_unitaire} FCFA</h2>
                     </div>
-                    <h3 className='font-medium text-lg'>Quantité <span className='text-sm text-gray-500'>(En stock : {product.stock_disponible})</span></h3>
-                    <div className='flex items-center gap-2 md:gap-4 mt-2'>
-                        <div className='p-2 border flex items-center gap-3 md:gap-6 px-2 md:px-4'>
-                            <button disabled={quantity === 1} onClick={() => setQuantity(quantity - 1)} className="text-base md:text-lg font-bold">-</button>
-                            <span className="text-base md:text-lg">{quantity}</span>
-                            <button disabled={quantity >= product.stock_disponible} onClick={() => setQuantity(quantity + 1)} className="text-base md:text-lg font-bold">+</button>
+                    <div className='space-y-2 mb-4'>
+                        <p className='text-sm text-gray-600'><span className='font-medium'>Stock disponible:</span> {product.stock_disponible} unités</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 className='font-medium text-lg mb-3'>Nombre d'unités à commander</h3>
+                    <div className='flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6'>
+                        <div className='p-3 border flex items-center gap-4 px-4 rounded-md min-w-[140px]'>
+                            <button disabled={quantity === 1} onClick={() => setQuantity(quantity - 1)} className="text-lg font-bold w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded">-</button>
+                            <span className="text-lg font-medium min-w-[2ch] text-center">{quantity}</span>
+                            <button disabled={quantity >= product.stock_disponible} onClick={() => setQuantity(quantity + 1)} className="text-lg font-bold w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded">+</button>
                         </div>
-                        <p className='text-base md:text-2xl font-bold'> = {(quantity * product.prix_unitaire).toFixed(2)} FCFA</p>
+                        <p className='text-lg md:text-xl font-bold text-green-600'> = {Math.round(quantity * product.prix_unitaire)} FCFA</p>
                     </div>
                 </div>
 
-                {/* Barre d'action fixe sur mobile, statique sur desktop */}
-                <div className="md:static fixed bottom-0 left-0 w-full bg-white p-4 border-t md:border-0 md:p-0 z-10">
-                    <Button disabled={loading || product.stock_disponible <= 0} className="w-full flex gap-3" onClick={() => addToCart()}>
-                        <ShoppingBasket />
-                        {loading ? <LoaderCircle className='animate-spin' /> : product.stock_disponible <= 0 ? 'En rupture de stock' : 'Ajouter au panier'}
+                {/* Bouton intégré dans le flux normal */}
+                <div className="mt-4">
+                    <Button disabled={loading || product.stock_disponible <= 0} className="w-full flex gap-3 h-12 text-base font-medium" onClick={() => addToCart()}>
+                        <ShoppingBasket size={20} />
+                        {loading ? <LoaderCircle className='animate-spin' size={20} /> : product.stock_disponible <= 0 ? 'En rupture de stock' : 'Ajouter au panier'}
                     </Button>
                 </div>
             </div>

@@ -70,7 +70,7 @@ function Header() {
                         <Image src="/logo.png" alt="Bénin Luxe Cajou" width={100} height={80} className="cursor-pointer h-auto" />
                     </Link>
                     <Link href="/">
-                    <span className="text-2xl font-bold text-primary font-serif">Bénin Luxe Cajou</span>
+                    <span className="text-2xl font-bold text-primary font-sans">Bénin Luxe Cajou</span>
                     </Link>
                 </div>
 

@@ -1,4 +1,3 @@
-import { Outfit } from "next/font/google";
 import "./globals.css";
 import Header from "./_components/Header";
 import Footer from "./_components/Footer"; 
@@ -6,8 +5,6 @@ import CookieBanner from "./_components/CookieBanner";
 import SEOSchema from "./_components/SEOSchema";
 import Providers from "./_components/Providers";
 import { Toaster } from "@/components/ui/sonner";
-
-const outfit = Outfit({ subsets: ["latin"] });
 
 // Metadata SEO - maintenant que c'est un server component
 export const metadata = {
@@ -29,7 +26,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
-      <body className={outfit.className}>
+      <body className="font-sans">
         <SEOSchema />
         <Providers>
           <Header />

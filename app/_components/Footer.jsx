@@ -111,7 +111,7 @@ function Footer() {
       <div className="relative z-10 container mx-auto px-4 py-12">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-10">
           <div className="text-center md:text-left">
-            <h2 className="text-2xl font-serif font-bold text-white">
+            <h2 className="text-2xl font-sans font-bold text-white">
               Restez informé
             </h2>
             <p className="text-white/80 mt-1">
@@ -141,7 +141,7 @@ function Footer() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-10">
           <div>
-            <h3 className="font-serif font-bold text-lg mb-4 text-white">Informations</h3>
+            <h3 className="font-sans font-bold text-lg mb-4 text-white">Informations</h3>
             <ul className="space-y-3">
               <li>
                 <Link
@@ -171,7 +171,7 @@ function Footer() {
           </div>
 
           <div>
-            <h3 className="font-serif font-bold text-lg mb-4 text-white">Support</h3>
+            <h3 className="font-sans font-bold text-lg mb-4 text-white">Support</h3>
             <ul className="space-y-3">
               <li>
                 <Link
@@ -201,7 +201,7 @@ function Footer() {
           </div>
 
           <div>
-            <h3 className="font-serif font-bold text-lg mb-4 text-white">Produits</h3>
+            <h3 className="font-sans font-bold text-lg mb-4 text-white">Produits</h3>
             <ul className="space-y-3">
               <li>
                 <Link

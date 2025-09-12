@@ -12,7 +12,7 @@ import GlobalApi from "../_utils/GlobalApi";
 
 // Les imports pour le Carousel et Autoplay ne sont plus nécessaires et ont été supprimés.
 
-function HomeClient({ catalogueStructure, initialProducts, sliderList }) {
+function HomeClient({ catalogueStructure, initialProducts, sliderList, loading }) {
   // --- Votre logique de filtrage (MISE À JOUR) ---
   const [currentProducts, setCurrentProducts] = useState(initialProducts);
   const [displayedProducts, setDisplayedProducts] = useState(initialProducts);
@@ -107,7 +107,7 @@ function HomeClient({ catalogueStructure, initialProducts, sliderList }) {
 
       {/* 2. L'ancre pour le bouton */}
       <div id="liste-produits">
-        <ProductList productList={displayedProducts} />
+        <ProductList productList={displayedProducts} loading={loading} />
       </div>
 
       {/* 3. Le carrousel est REMPLACÉ par une seule bannière statique */}

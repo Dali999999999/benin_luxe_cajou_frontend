@@ -20,8 +20,17 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", ...fontFamily.sans],
-        serif: ["Playfair Display", ...fontFamily.serif],
+        sans: [
+          'system-ui',
+          '-apple-system', 
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif'
+        ],
+        serif: [...fontFamily.serif],
       },
       colors: {
         border: "hsl(var(--border))",

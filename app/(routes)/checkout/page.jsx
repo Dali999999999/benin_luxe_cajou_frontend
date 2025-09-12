@@ -208,14 +208,14 @@ function Checkout() {
                     {cart && cart.map(item => (
                         <div key={item.id} className="flex justify-between text-sm">
                             <span>{item.produit.nom} x {item.quantite}</span>
-                            <span>{(item.quantite * item.produit.prix_unitaire).toFixed(2)} FCFA</span>
+                            <span>{Math.round(item.quantite * item.produit.prix_unitaire)} FCFA</span>
                         </div>
                     ))}
                 </div>
                 <div className="space-y-2">
-                    <div className="flex justify-between"><span>Sous-total</span><span>{subtotal.toFixed(2)} FCFA</span></div>
-                    <div className="flex justify-between"><span>Livraison</span><span>{(total - subtotal).toFixed(2)} FCFA</span></div>
-                    <div className="flex justify-between font-bold text-lg border-t pt-2 mt-2"><span>Total</span><span>{total.toFixed(2)} FCFA</span></div>
+                    <div className="flex justify-between"><span>Sous-total</span><span>{Math.round(subtotal)} FCFA</span></div>
+                    <div className="flex justify-between"><span>Livraison</span><span>{Math.round(total - subtotal)} FCFA</span></div>
+                    <div className="flex justify-between font-bold text-lg border-t pt-2 mt-2"><span>Total</span><span>{Math.round(total)} FCFA</span></div>
                 </div>
                 <Button className="w-full mt-6" onClick={handlePlaceOrder} disabled={isPlacingOrder}>
                     {isPlacingOrder ? <LoaderIcon className='animate-spin' /> : "Passer la commande"}

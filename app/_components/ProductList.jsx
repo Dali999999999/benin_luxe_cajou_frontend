@@ -45,7 +45,7 @@ const gridVariants = {
   })
 };
 
-function ProductList({ productList }) {
+function ProductList({ productList, loading = false }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -63,7 +63,7 @@ function ProductList({ productList }) {
   };
 
   // Loading state
-  if (!productList) {
+  if (loading || !productList) {
     return (
       <div id="products" className='mt-12 md:mt-16'>
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8'>
@@ -75,8 +75,8 @@ function ProductList({ productList }) {
     );
   }
 
-  // Empty state
-  if (productList.length === 0) {
+  // Empty state - seulement quand on n'est plus en loading
+  if (productList.length === 0 && !loading) {
     return (
       <div id="products" className="mt-10 py-16 text-center">
         <p className="text-slate-500">Aucun produit trouvé pour cette sélection.</p>
