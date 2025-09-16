@@ -7,6 +7,7 @@ import GlobalApi from '../_utils/GlobalApi'
 import { toast } from 'sonner'
 import { CartContext } from '../_context/CartContext'
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
+import Price from './Price'
 
 
 function ProductItemDetail({ product }) {
@@ -63,7 +64,7 @@ function ProductItemDetail({ product }) {
                     <p className='text-lg text-gray-600 font-medium mt-2'>{product.quantite_contenant}g</p>
                     <p className='text-sm text-gray-500 mt-2'>{product.description}</p>
                     <div className='flex gap-3 my-4'>
-                        <h2 className='font-bold text-3xl'>{product.prix_unitaire} FCFA</h2>
+                        <Price price={product.prix_unitaire} className='font-bold text-3xl' showOriginal={true} />
                     </div>
                     <div className='space-y-2 mb-4'>
                         <p className='text-sm text-gray-600'><span className='font-medium'>Stock disponible:</span> {product.stock_disponible} unités</p>
@@ -78,7 +79,7 @@ function ProductItemDetail({ product }) {
                             <span className="text-lg font-medium min-w-[2ch] text-center">{quantity}</span>
                             <button disabled={quantity >= product.stock_disponible} onClick={() => setQuantity(quantity + 1)} className="text-lg font-bold w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded">+</button>
                         </div>
-                        <p className='text-lg md:text-xl font-bold text-green-600'> = {Math.round(quantity * product.prix_unitaire)} FCFA</p>
+                        <p className='text-lg md:text-xl font-bold text-green-600'> = <Price price={Math.round(quantity * product.prix_unitaire)} showOriginal={true} /></p>
                     </div>
                 </div>
 

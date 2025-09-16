@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { toast } from 'sonner';
 import { CartContext } from '../_context/CartContext';
 import GlobalApi from '../_utils/GlobalApi';
+import Price from './Price';
 
 function Cart() {
 
@@ -56,7 +57,7 @@ function Cart() {
                                 <div className="flex-1">
                                     <h3 className="text-sm font-semibold">{item.produit.nom}</h3>
                                     <p className="text-xs text-gray-500">Quantité: {item.quantite}</p>
-                                    <p className="text-sm font-bold">{Math.round(item.quantite * item.produit.prix_unitaire)} FCFA</p>
+                                    <Price price={Math.round(item.quantite * item.produit.prix_unitaire)} className="text-sm font-bold" />
                                 </div>
                                 <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => removeItemFromCart(item.produit.id)}>
                                     <X className="h-4 w-4" />
@@ -69,7 +70,7 @@ function Cart() {
                     <div className="mt-6 border-t pt-4 shrink-0">
                         <div className="flex justify-between items-center font-bold text-lg mb-4">
                             <span>Total</span>
-                            <span>{calculateCartSubtotal()} FCFA</span>
+                            <Price price={calculateCartSubtotal()} />
                         </div>
                         <SheetClose asChild>
                             <Link href="/checkout" className="block">

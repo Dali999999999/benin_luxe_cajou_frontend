@@ -26,6 +26,7 @@ import { CartContext } from '../_context/CartContext';
 import { CategoryContext } from '../_context/CategoryContext';
 import { AuthContext } from '../_context/AuthContext';
 import { authCookies } from '../_utils/cookieManager';
+import CurrencySelector from './CurrencySelector';
 
 function Header() {
     const [catalogueStructure, setCatalogueStructure] = useState([]);
@@ -97,11 +98,17 @@ function Header() {
                     </DropdownMenu>
 
                     <Link href="/about" className="font-medium text-slate-700 hover:text-primary transition-colors">Qui sommes-nous</Link>
+                    <Link href="/international-order" className="font-medium text-slate-700 hover:text-primary transition-colors flex items-center gap-1">
+                        <span>🌍</span> Commande Internationale
+                    </Link>
                     <Link href="/contact" className="font-medium text-slate-700 hover:text-primary transition-colors">Contact</Link>
                 </nav>
 
                 {/* Right Icons Desktop */}
                 <div className="hidden lg:flex items-center gap-4">
+                    {/* Currency Selector */}
+                    <CurrencySelector />
+
                     {/* Home */}
                     <Link href="/" className="p-2 rounded-full hover:bg-slate-100 transition-colors">
                         <Home className="w-6 h-6 text-slate-600" />
@@ -179,6 +186,11 @@ function Header() {
                 </div>
 
                 <div className="flex flex-col mt-4 p-4 gap-4">
+                    {/* Currency Selector for mobile */}
+                    <div>
+                        <CurrencySelector />
+                    </div>
+
                     {/* Categories */}
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -199,8 +211,11 @@ function Header() {
                         </DropdownMenuContent>
                     </DropdownMenu>
 
-                    {/* About / Contact */}
+                    {/* About / International / Contact */}
                     <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="font-medium text-slate-700 hover:text-primary transition-colors">Qui sommes-nous</Link>
+                    <Link href="/international-order" onClick={() => setMobileMenuOpen(false)} className="font-medium text-slate-700 hover:text-primary transition-colors flex items-center gap-1">
+                        <span>🌍</span> Commande Internationale
+                    </Link>
                     <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="font-medium text-slate-700 hover:text-primary transition-colors">Contact</Link>
 
                     {/* Home */}

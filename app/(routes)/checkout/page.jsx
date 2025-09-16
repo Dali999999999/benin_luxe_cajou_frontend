@@ -9,11 +9,14 @@ import { Input } from '@/components/ui/input';
 import { LoaderIcon } from 'lucide-react';
 import { AuthContext } from '@/app/_context/AuthContext';
 import { CartContext } from '@/app/_context/CartContext';
+import Price from '@/app/_components/Price';
+import { useCurrency } from '@/app/_context/CurrencyContext';
 
 function Checkout() {
     // On utilise les contextes pour l'authentification et le panier
     const { isLogin } = useContext(AuthContext);
     const { cart } = useContext(CartContext);
+    const { formatPrice } = useCurrency();
 
     const [deliveryZones, setDeliveryZones] = useState([]);
     const [formData, setFormData] = useState({
@@ -166,7 +169,7 @@ function Checkout() {
                     <select name="zone_livraison_id" onChange={(e) => handleZoneChange(e.target.value)} className="w-full p-2 border rounded-md bg-white" defaultValue="">
                         <option value="" disabled>Sélectionner une zone de livraison</option>
                         {deliveryZones.map(zone => (
-                            <option key={zone.id} value={zone.id}>{zone.nom_zone} (+{zone.tarif_livraison} FCFA)</option>
+                            <option key={zone.id} value={zone.id}>{zone.nom_zone} (+{formatPrice(zone.tarif_livraison)})</option>
                         ))}
                     </select>
                     
@@ -208,14 +211,14 @@ function Checkout() {
                     {cart && cart.map(item => (
                         <div key={item.id} className="flex justify-between text-sm">
                             <span>{item.produit.nom} x {item.quantite}</span>
-                            <span>{Math.round(item.quantite * item.produit.prix_unitaire)} FCFA</span>
+                            <Price price={Math.round(item.quantite * item.produit.prix_unitaire)} />
                         </div>
                     ))}
                 </div>
                 <div className="space-y-2">
-                    <div className="flex justify-between"><span>Sous-total</span><span>{Math.round(subtotal)} FCFA</span></div>
-                    <div className="flex justify-between"><span>Livraison</span><span>{Math.round(total - subtotal)} FCFA</span></div>
-                    <div className="flex justify-between font-bold text-lg border-t pt-2 mt-2"><span>Total</span><span>{Math.round(total)} FCFA</span></div>
+                    <div className="flex justify-between"><span>Sous-total</span><Price price={Math.round(subtotal)} /></div>
+                    <div className="flex justify-between"><span>Livraison</span><Price price={Math.round(total - subtotal)} /></div>
+                    <div className="flex justify-between font-bold text-lg border-t pt-2 mt-2"><span>Total</span><Price price={Math.round(total)} /></div>
                 </div>
                 <Button className="w-full mt-6" onClick={handlePlaceOrder} disabled={isPlacingOrder}>
                     {isPlacingOrder ? <LoaderIcon className='animate-spin' /> : "Passer la commande"}

@@ -12,6 +12,7 @@ import { ShoppingBasket, Eye, LoaderCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import GlobalApi from '../_utils/GlobalApi';
 import { CartContext } from '../_context/CartContext';
+import Price from './Price';
 
 function ProductItem({ product }) {
   const [loading, setLoading] = useState(false);
@@ -80,7 +81,7 @@ function ProductItem({ product }) {
         <div className="flex-grow flex flex-col items-start text-left mb-4">
           <h2 className='font-semibold text-lg text-slate-800 truncate w-full'>{product.nom}</h2>
           <p className='text-sm text-gray-600 mt-1'>{product.quantite_contenant}g</p>
-          <p className='font-bold text-xl text-green-600 mt-1'>{product.prix_unitaire} FCFA</p>
+          <Price price={product.prix_unitaire} className="font-bold text-xl text-green-600 mt-1" showOriginal={true} />
         </div>
 
         {/* Mobile buttons */}
