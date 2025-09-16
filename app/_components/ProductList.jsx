@@ -48,6 +48,7 @@ const gridVariants = {
 function ProductList({ productList, loading = false }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [hasInitialized, setHasInitialized] = useState(false);
 
   const productsPerPage = 8;
   const totalPages = productList ? Math.ceil(productList.length / productsPerPage) : 0;
@@ -55,6 +56,9 @@ function ProductList({ productList, loading = false }) {
   // Reset to page 0 when the product list changes (e.g., due to filtering)
   useEffect(() => {
     setCurrentPage(0);
+    if (productList && productList.length >= 0) {
+      setHasInitialized(true);
+    }
   }, [productList]);
 
   const paginate = (newDirection) => {
@@ -75,8 +79,8 @@ function ProductList({ productList, loading = false }) {
     );
   }
 
-  // Empty state - seulement quand on n'est plus en loading
-  if (productList.length === 0 && !loading) {
+  // Empty state - seulement quand on n'est plus en loading ET qu'on a bien initialisé
+  if (productList.length === 0 && !loading && hasInitialized) {
     return (
       <div id="products" className="mt-10 py-16 text-center">
         <p className="text-slate-500">Aucun produit trouvé pour cette sélection.</p>

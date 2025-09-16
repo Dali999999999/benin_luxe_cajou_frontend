@@ -54,8 +54,6 @@ function ProductItemDetail({ product }) {
                         </CarouselItem>
                     ))}
                 </CarouselContent>
-                <CarouselPrevious className="left-[-1rem] top-1/2 -translate-y-1/2" />
-                <CarouselNext className="right-2 top-1/2 -translate-y-1/2" />
             </Carousel>
 
             {/* Information */}

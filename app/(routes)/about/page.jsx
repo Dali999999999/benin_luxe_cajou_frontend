@@ -129,16 +129,31 @@ export default function AboutPage() {
 
       {/* Portrait de la fondatrice */}
       <section className="py-16 px-6 max-w-6xl mx-auto">
-        <div>
-          <h2 className="text-3xl font-bold text-green-700 mb-4">
-            Zoé Alia, l’Âme de DZ
-          </h2>
-          <p>
-            Femme entrepreneure béninoise, Zoé incarne la passion, la
-            détermination et l’amour du terroir. Héritière des savoirs de sa
-            mère, elle a su transformer cet héritage en une marque emblématique,
-            symbole de qualité et de résilience.
-          </p>
+        <h2 className="text-3xl font-bold text-center text-green-700 mb-8">
+          Zoé Alia, l'Âme de DZ
+        </h2>
+        <div className="grid md:grid-cols-2 gap-10 items-center">
+          <div className="relative h-80 w-full">
+            <Image
+              src="/images/zoe-alia.jpg"
+              alt="Zoé Alia, fondatrice de DZ Bénin Luxe Cajou"
+              fill
+              className="object-cover rounded-xl shadow-lg"
+            />
+          </div>
+          <div>
+            <p className="text-lg leading-relaxed text-justify mb-4">
+              Femme entrepreneure béninoise, Zoé incarne la passion, la
+              détermination et l'amour du terroir. Héritière des savoirs de sa
+              mère, elle a su transformer cet héritage en une marque emblématique,
+              symbole de qualité et de résilience.
+            </p>
+            <p className="text-lg leading-relaxed text-justify">
+              Depuis plus de 20 ans, elle développe avec son mari Dominique 
+              cette entreprise familiale qui honore les richesses du Bénin
+              et porte haut les couleurs de l'excellence béninoise.
+            </p>
+          </div>
         </div>
       </section>
     </div>

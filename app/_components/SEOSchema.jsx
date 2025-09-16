@@ -4,7 +4,7 @@ export default function SEOSchema() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Benin Luxe Cajou",
-    "description": "Spécialiste en noix de cajou premium du Bénin",
+    "description": "Producteur de noix de cajou grillées et naturelles du Bénin",
     "url": "https://dzbeninluxecajou.com",
     "logo": "https://dzbeninluxecajou.com/logo.png",
     "sameAs": [
@@ -19,14 +19,32 @@ export default function SEOSchema() {
       "@type": "Country",
       "name": "Benin"
     },
-    "makesOffer": {
-      "@type": "Offer",
-      "itemOffered": {
-        "@type": "Product",
-        "name": "Noix de Cajou Premium",
-        "description": "Noix de cajou de qualité supérieure du Bénin"
+    "makesOffer": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Noix de Cajou Grillées Entières",
+          "description": "Noix de cajou grillées entières de qualité premium du Bénin"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Noix de Cajou Grillées Brisées",
+          "description": "Noix de cajou grillées brisées, idéales pour la cuisine"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Noix de Cajou Naturelles",
+          "description": "Noix de cajou naturelles non grillées du Bénin"
+        }
       }
-    }
+    ]
   };
 
   return (
