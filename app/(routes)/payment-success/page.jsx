@@ -36,6 +36,17 @@ function PaymentSuccess() {
             }
             setOrderId(id);
 
+            // 🔍 NOUVELLE LOGIQUE : Détecter les annulations FedaPay
+            const fedapayStatus = searchParams.get('status');
+            const closeStatus = searchParams.get('close');
+
+            // Si FedaPay indique pending + close=true = utilisateur a annulé
+            if (fedapayStatus === 'pending' && closeStatus === 'true') {
+                console.log('🚫 Annulation détectée via paramètres FedaPay');
+                router.push(`/payment-cancelled?order_id=${id}`);
+                return;
+            }
+
             const checkStatus = async () => {
                 try {
                     const resp = await GlobalApi.getPaymentStatus(id);
