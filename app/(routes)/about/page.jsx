@@ -40,7 +40,7 @@ export default function AboutPage() {
         <h2 className="text-3xl font-bold text-center text-green-700 mb-8">
           Notre Histoire
         </h2>
-        <div className="grid md:grid-cols-2 gap-10 items-center">
+        <div className="grid md:grid-cols-2 gap-10 items-center mb-12">
           <div>
             <p className="text-lg leading-relaxed text-justify">
               DZ est née d'une histoire familiale et entrepreneuriale. Depuis 2003,
@@ -58,6 +58,37 @@ export default function AboutPage() {
               fill
               className="object-cover rounded-xl shadow-lg"
             />
+          </div>
+        </div>
+
+        {/* Témoignage vidéo de Dominique */}
+        <div className="bg-green-50 rounded-2xl p-6 md:p-8">
+          <h3 className="text-2xl font-bold text-green-700 mb-6 text-center">
+            Dominique nous raconte leur parcours
+          </h3>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="relative aspect-video w-full bg-gray-200 rounded-xl overflow-hidden shadow-lg">
+              <video
+                controls
+                className="w-full h-full object-cover"
+                poster="/images/video-thumbnail.jpg"
+              >
+                <source src="/video.mp4" type="video/mp4" />
+                <p className="absolute inset-0 flex items-center justify-center text-gray-600">
+                  Votre navigateur ne supporte pas la lecture vidéo.
+                </p>
+              </video>
+            </div>
+            <div>
+              <p className="text-lg leading-relaxed text-justify text-gray-700 mb-4">
+                "Cette aventure que nous avons commencée avec Zoé, c'est plus qu'une
+                entreprise, c'est un héritage que nous construisons pour nos enfants
+                et pour le Bénin."
+              </p>
+              <p className="text-base text-gray-600 italic">
+                — Dominique, co-fondateur de DZ Bénin Luxe Cajou
+              </p>
+            </div>
           </div>
         </div>
       </section>

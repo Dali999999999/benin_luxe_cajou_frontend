@@ -215,13 +215,15 @@ function Footer() {
           </div>
 
           <div className="flex flex-col items-start">
-            <Image
-              src="/logo.png"
-              width={150}
-              height={100}
-              alt="logo"
-              className="h-auto"
-            />
+            <div className="bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-white/20">
+              <Image
+                src="/logo.png"
+                width={150}
+                height={100}
+                alt="logo"
+                className="h-auto"
+              />
+            </div>
             <p className="mt-4 text-white/70 text-sm">
               Des noix de cajou de qualité premium, de nos plantations à votre
               table.

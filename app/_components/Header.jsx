@@ -62,25 +62,25 @@ function Header() {
     };
 
     return (
-        <header className="bg-white shadow-md sticky top-0 z-50 transition-all duration-300">
-            <div className="container mx-auto flex justify-between items-center p-4">
+        <header className="bg-white shadow-md sticky top-0 z-50 transition-all duration-500 ease-in-out">
+            <div className="container mx-auto flex justify-between items-center p-4 transition-all duration-500 ease-in-out">
                 
                 {/* Logo + Nom */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 responsive-transition header-element">
                     <Link href="/">
-                        <Image src="/logo.png" alt="Bénin Luxe Cajou" width={100} height={80} className="cursor-pointer h-auto" />
+                        <Image src="/logo.png" alt="Bénin Luxe Cajou" width={100} height={80} className="cursor-pointer h-auto responsive-transition header-element" />
                     </Link>
                     <Link href="/">
-                    <span className="text-2xl font-bold text-primary font-sans">Bénin Luxe Cajou</span>
+                    <span className="text-2xl font-bold text-primary font-sans responsive-transition header-element">Bénin Luxe Cajou</span>
                     </Link>
                 </div>
 
                 {/* Desktop Navigation */}
-                <nav className="hidden lg:flex items-center gap-6">
+                <nav className="hidden xl:flex items-center gap-3 responsive-transition header-element nav-appear">
                     {/* Categories */}
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <button className="flex items-center gap-2 font-medium text-slate-700 hover:text-primary transition-colors">
+                            <button className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-slate-700 hover:text-primary hover:bg-primary/10 transition-all duration-200 border border-transparent hover:border-primary/20 whitespace-nowrap">
                                 <LayoutGrid className="w-5 h-5" /> Catégories
                             </button>
                         </DropdownMenuTrigger>
@@ -97,15 +97,52 @@ function Header() {
                         </DropdownMenuContent>
                     </DropdownMenu>
 
-                    <Link href="/about" className="font-medium text-slate-700 hover:text-primary transition-colors">Qui sommes-nous</Link>
-                    <Link href="/international-order" className="font-medium text-slate-700 hover:text-primary transition-colors flex items-center gap-1">
+                    <Link href="/about" className="px-4 py-2 rounded-lg font-medium text-slate-700 hover:text-primary hover:bg-primary/10 transition-all duration-200 border border-transparent hover:border-primary/20 whitespace-nowrap">
+                        Qui sommes-nous
+                    </Link>
+                    <Link href="/international-order" className="px-4 py-2 rounded-lg font-medium text-slate-700 hover:text-primary hover:bg-primary/10 transition-all duration-200 border border-transparent hover:border-primary/20 flex items-center gap-1 whitespace-nowrap">
                         <span>🌍</span> Commande Internationale
                     </Link>
-                    <Link href="/contact" className="font-medium text-slate-700 hover:text-primary transition-colors">Contact</Link>
+                    <Link href="/contact" className="px-4 py-2 rounded-lg font-medium text-slate-700 hover:text-primary hover:bg-primary/10 transition-all duration-200 border border-transparent hover:border-primary/20 whitespace-nowrap">
+                        Contact
+                    </Link>
+                </nav>
+
+                {/* Medium Screen Navigation (lg breakpoint) */}
+                <nav className="hidden lg:flex xl:hidden items-center gap-1 responsive-transition header-element nav-appear">
+                    {/* Categories */}
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <button className="flex items-center gap-1 px-3 py-2 rounded-lg font-medium text-slate-700 hover:text-primary hover:bg-primary/10 transition-all duration-200 border border-transparent hover:border-primary/20 text-sm whitespace-nowrap">
+                                <LayoutGrid className="w-4 h-4" /> Catégories
+                            </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-64">
+                            <DropdownMenuLabel>Parcourir les catégories</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => handleCategoryClick(null)}>Tout</DropdownMenuItem>
+                            {catalogueStructure.map((cat, idx) => (
+                                <DropdownMenuItem key={idx} onClick={() => handleCategoryClick(cat)} className="flex items-center gap-3">
+                                    <Image src={cat.image_url || '/logo.png'} alt={cat.nom} width={25} height={25} unoptimized />
+                                    <span>{cat.nom}</span>
+                                </DropdownMenuItem>
+                            ))}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+
+                    <Link href="/about" className="px-3 py-2 rounded-lg font-medium text-slate-700 hover:text-primary hover:bg-primary/10 transition-all duration-200 border border-transparent hover:border-primary/20 text-sm whitespace-nowrap">
+                        À propos
+                    </Link>
+                    <Link href="/international-order" className="px-3 py-2 rounded-lg font-medium text-slate-700 hover:text-primary hover:bg-primary/10 transition-all duration-200 border border-transparent hover:border-primary/20 flex items-center gap-1 text-sm whitespace-nowrap">
+                        <span>🌍</span> International
+                    </Link>
+                    <Link href="/contact" className="px-3 py-2 rounded-lg font-medium text-slate-700 hover:text-primary hover:bg-primary/10 transition-all duration-200 border border-transparent hover:border-primary/20 text-sm whitespace-nowrap">
+                        Contact
+                    </Link>
                 </nav>
 
                 {/* Right Icons Desktop */}
-                <div className="hidden lg:flex items-center gap-4">
+                <div className="hidden lg:flex items-center gap-2 xl:gap-4 responsive-transition header-element nav-appear-right">
                     {/* Currency Selector */}
                     <CurrencySelector />
 
@@ -151,7 +188,7 @@ function Header() {
 
                 {/* --- MODIFICATION START --- */}
                 {/* Mobile Icons (Cart + Burger) */}
-                <div className="flex items-center gap-2 lg:hidden">
+                <div className="flex items-center gap-2 lg:hidden responsive-transition header-element nav-appear-right">
                      {/* Cart */}
                      <Sheet>
                         <SheetTrigger asChild>
